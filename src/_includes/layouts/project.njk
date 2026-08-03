@@ -1,0 +1,23 @@
+---
+layout: layouts/base.njk
+---
+      <section class="section_work-header">
+        <div class="padding-section-medium"></div>
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="work-header_component">
+              <div class="work-header_head">
+                <div class="work-header_infos">
+                  <div class="work-header_brand">
+                    <div class="text-style-label">{{ tag }}</div>
+                  </div>
+                  <div class="work-header_info-text">{{ subtitle }}</div>
+                </div>
+                <h1 class="heading-style-h3 is-mobile-h4">{{ heroHeading | safe }}</h1>
+              </div>
+              <div class="work-header_img-wrap"><img loading="lazy" src="{{ heroImage }}" alt="{{ heroImageAlt or cardTitle }}" class="work-header_img"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+{{ content | safe }}

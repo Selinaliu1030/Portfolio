@@ -1,0 +1,40 @@
+---
+layout: layouts/page.njk
+currentPage: home
+title: "Selina Liu's Portfolio"
+description: "Selina Liu — UX/HCI portfolio: case studies in human-centered app design."
+permalink: index.html
+---
+      <section class="section_work-list">
+        <div class="padding-section-medium is-mobile-big"></div>
+        <div class="padding-global">
+          <div class="container-medium">
+            <div class="work-list_component">
+              <div class="work-list_head">
+                <h2>Projects</h2>
+                <div class="work-list_number-wrap">
+                  <div class="work-list_number">{{ collections.project | length }}</div>
+                </div>
+              </div>
+              <div class="spacer-xlarge is-mobile-small"></div>
+              <div class="work-list_wrapper">
+                <ul role="list" class="work-list_list">
+                  {%- for project in collections.project -%}
+                  <li class="work-list_item">
+                    <a href="{{ project.fileSlug }}.html" class="work-list_block w-inline-block">
+                      <div class="w-layout-hflex work-list_images-wrap">
+                        <div class="w-layout-hflex work-list_image-main"><img src="{{ project.data.thumbnail }}" loading="lazy" sizes="100vw" srcset="{{ project.data.thumbnailSrcset }}" alt="{{ project.data.cardTitle }} thumbnail" class="image-22"></div>
+                      </div>
+                      <div class="w-layout-vflex work-list_infos">
+                        <h6>{{ project.data.cardTitle }}</h6>
+                        <div class="text-block-4">{{ project.data.cardTagline }}</div>
+                      </div>
+                    </a>
+                  </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
