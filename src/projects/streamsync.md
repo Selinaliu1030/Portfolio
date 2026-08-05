@@ -49,6 +49,19 @@ tws:
     prompt: "Feel the body and the emotion"
   - aspect: "How I take care of myself"
     prompt: "Back to self condition"
+storyboard:
+  - image: images/streamsync-storyboard-1.jpg
+    alt: "Amy looking startled and turning back toward her laptop after being interrupted"
+    caption: "After interruption, Amy wants to go back to the flow"
+  - image: images/streamsync-storyboard-2.jpg
+    alt: "Amy at her laptop with a small negative-thought cloud icon beside her, a gradient beam guiding her attention to the screen"
+    caption: "StreamSync guides the user to release the negative thoughts"
+  - image: images/streamsync-storyboard-3.jpg
+    alt: "Amy sitting calmly with eyes closed, a warm glow surrounding her while she works"
+    caption: "Meditation helps stabilize the mood"
+  - image: images/streamsync-storyboard-4.jpg
+    alt: "Amy smiling and relaxed, working happily at her laptop"
+    caption: "Reflects on task progress and smoothly gets back to task"
 ---
 {% metaBox skills, person, role, overview %}
 
@@ -103,7 +116,7 @@ Through the interview we found out that passive interruption can lead to negativ
 {% section "User Needs", "Story Board" %}
 We identified that our target users want genuine companionship when completing tasks. To better understand their motivations and pain points, we used a user journey map, which allowed us to extract key design insights for further ideation and prototyping.
 
-![User journey map](images/Frame-19.jpg)
+{% storyboard storyboard %}
 
 **Insights:** **How Might We** transform the negative emotions caused by passive interruptions into a controllable, positive experience?
 {% endsection %}

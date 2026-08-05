@@ -202,6 +202,29 @@ module.exports = function (eleventyConfig) {
       </div>`;
   });
 
+  // Storyboard — sequence of illustrated panels + real captions, revealed
+  // left-to-right on scroll (see src/js/interactive.js .storyboard handling).
+  eleventyConfig.addShortcode("storyboard", function (panels) {
+    const arrow = `<svg viewBox="0 0 24 16" fill="none"><path d="M0 8h20M14 2l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const items = (panels || [])
+      .map((p, i, arr) => {
+        const panel = `
+        <figure class="storyboard_panel">
+          <img src="${esc(p.image)}" alt="${esc(p.alt)}" loading="lazy">
+          <figcaption>${esc(p.caption)}</figcaption>
+        </figure>`;
+        const connector = i < arr.length - 1
+          ? `<div class="storyboard_arrow" aria-hidden="true">${arrow}</div>`
+          : "";
+        return panel + connector;
+      })
+      .join("");
+    return `
+      <div class="storyboard">
+        <div class="storyboard_panels">${items}</div>
+      </div>`;
+  });
+
   eleventyConfig.setLibrary("md", markdownIt);
 
   return {
