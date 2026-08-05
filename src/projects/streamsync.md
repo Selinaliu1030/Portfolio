@@ -62,6 +62,21 @@ storyboard:
   - image: images/streamsync-storyboard-4.jpg
     alt: "Amy smiling and relaxed, working happily at her laptop"
     caption: "Reflects on task progress and smoothly gets back to task"
+personaChain:
+  personas:
+    - avatar: images/streamsync-persona-joseph.png
+      name: "Joseph"
+      quote: "Feel like the time being wasted and feel guilty about it"
+    - avatar: images/streamsync-persona-rosa.png
+      name: "Rosa"
+      quote: "Feel more agitated when interrupted during deep work and ends up not returning to work"
+    - avatar: images/streamsync-persona-greta.png
+      name: "Greta"
+      quote: "Can't control external interruption — no self control, and doubt self capability"
+  chain:
+    - "Interruption"
+    - "Negative Emotions"
+    - "Lower the Motivation"
 ---
 {% metaBox skills, person, role, overview %}
 
@@ -110,7 +125,7 @@ We conducted semi-structured interviews with **20 university students**, who hav
 **Insight:**
 Through the interview we found out that passive interruption can lead to negative emotions and thus reduce the motivation of going back to work.
 
-![Interview validation insights](images/5.-訪談驗證.png)
+{% personaChain personaChain %}
 {% endsection %}
 
 {% section "User Needs", "Story Board" %}

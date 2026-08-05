@@ -1,7 +1,7 @@
 // Hand-written site interactivity — not part of the Webflow export, so it
 // stays out of webflow.js. Drives the case-study scroll-reveal diagrams
-// (see src/css/site.css .tws-flow / .storyboard and the corresponding
-// twsFlowDiagram / storyboard shortcodes).
+// (see src/css/site.css .tws-flow / .storyboard / .persona-chain and the
+// corresponding twsFlowDiagram / storyboard / personaChain shortcodes).
 (function () {
   if (typeof gsap === "undefined") return;
 
@@ -95,6 +95,26 @@
             { y: 0, opacity: 1, duration: 0.45 },
             i * 0.09
           );
+        });
+        return tl;
+      });
+    });
+
+    // Interview personas + causal chain: cards reveal as a group first,
+    // then the 3-step chain reveals left-to-right right after.
+    document.querySelectorAll(".persona-chain").forEach(function (chain) {
+      var cards = chain.querySelectorAll(".persona-card");
+      var chainItems = chain.querySelectorAll(".persona-chain_step, .persona-chain_dots");
+      var revealEls = Array.prototype.concat.call([], Array.prototype.slice.call(cards), Array.prototype.slice.call(chainItems));
+
+      wireReveal(chain, revealEls, function () {
+        var tl = gsap.timeline({ paused: true });
+        cards.forEach(function (el, i) {
+          tl.fromTo(el, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45 }, i * 0.1);
+        });
+        var chainStart = cards.length * 0.1 + 0.15;
+        chainItems.forEach(function (el, i) {
+          tl.fromTo(el, { y: 12, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4 }, chainStart + i * 0.09);
         });
         return tl;
       });

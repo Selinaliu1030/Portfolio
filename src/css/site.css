@@ -231,3 +231,120 @@
     transform: rotate(90deg);
   }
 }
+
+/* Interview personas + causal chain (replaces 5.-訪談驗證.png). Colors
+   sampled directly from that source image. */
+.persona-chain {
+  background: var(--_colors---primary--beige);
+  border: 1px solid var(--_colors---grey--100);
+  border-radius: 14px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.persona-chain_cards {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.persona-card {
+  flex: 1 1 200px;
+  min-width: 170px;
+  margin: 0;
+  background: #fefefe;
+  border: 1px solid var(--_colors---grey--100);
+  border-radius: 12px;
+  padding: 18px 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.persona-card img {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: #fff;
+}
+
+.persona-card figcaption strong {
+  display: block;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--_colors---grey--400);
+  margin-bottom: 8px;
+}
+
+.persona-card figcaption span {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: #775f52;
+}
+
+.persona-chain_flow {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.persona-chain_step {
+  flex: 1 1 180px;
+  min-width: 140px;
+  padding: 18px 16px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+.persona-chain_step:nth-child(1) { background: #7c5436; }
+.persona-chain_step:nth-child(3) { background: #94705d; }
+.persona-chain_step:nth-child(5) { background: #c1a799; }
+
+.persona-chain_dots {
+  flex: 0 0 auto;
+  width: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #d6c3b0;
+}
+
+.persona-chain_dots svg {
+  width: 32px;
+  height: 14px;
+}
+
+.persona-card,
+.persona-chain_step,
+.persona-chain_dots {
+  opacity: 0;
+}
+
+.persona-card.is-visible,
+.persona-chain_step.is-visible,
+.persona-chain_dots.is-visible {
+  opacity: 1;
+}
+
+@media (max-width: 720px) {
+  .persona-chain_cards,
+  .persona-chain_flow {
+    flex-direction: column;
+  }
+  .persona-chain_dots {
+    width: 100%;
+    height: 24px;
+  }
+  .persona-chain_dots svg {
+    transform: rotate(90deg);
+  }
+}

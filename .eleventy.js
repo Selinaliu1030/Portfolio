@@ -225,6 +225,37 @@ module.exports = function (eleventyConfig) {
       </div>`;
   });
 
+  // Interview personas + causal chain — replaces the flattened
+  // 5.-訪談驗證.png. Two groups: persona cards (avatar/name/quote) and a
+  // 3-step causal chain connected by dotted arrows (see
+  // src/js/interactive.js .persona-chain handling for the reveal order).
+  eleventyConfig.addShortcode("personaChain", function (data) {
+    const dots = `<svg viewBox="0 0 32 14" fill="none"><line x1="0" y1="7" x2="24" y2="7" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/><path d="M20 2l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>`;
+    const cardsHtml = (data.personas || [])
+      .map(
+        (p) => `
+        <figure class="persona-card">
+          <img src="${esc(p.avatar)}" alt="${esc(p.name)}, interviewee">
+          <figcaption><strong>${esc(p.name)}</strong><span>${esc(p.quote)}</span></figcaption>
+        </figure>`
+      )
+      .join("");
+    const chainHtml = (data.chain || [])
+      .map((step, i, arr) => {
+        const item = `<div class="persona-chain_step">${esc(step)}</div>`;
+        const connector = i < arr.length - 1
+          ? `<div class="persona-chain_dots" aria-hidden="true">${dots}</div>`
+          : "";
+        return item + connector;
+      })
+      .join("");
+    return `
+      <div class="persona-chain">
+        <div class="persona-chain_cards">${cardsHtml}</div>
+        <div class="persona-chain_flow">${chainHtml}</div>
+      </div>`;
+  });
+
   eleventyConfig.setLibrary("md", markdownIt);
 
   return {
