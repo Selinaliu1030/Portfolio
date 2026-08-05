@@ -179,6 +179,29 @@ module.exports = function (eleventyConfig) {
       </section>`;
   });
 
+  // TWS-to-mapping flow diagram — header row (left label / right label) +
+  // N rows, each an {aspect, prompt} pair revealed left→right on scroll.
+  eleventyConfig.addShortcode("twsFlowDiagram", function (rows, headLeft, headRight) {
+    const arrow = `<svg viewBox="0 0 24 16" fill="none"><path d="M0 8h20M14 2l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+    const rowsHtml = (rows || [])
+      .map((r) => `
+        <div class="tws-flow_row">
+          <div class="tws-flow_aspect">${esc(r.aspect)}</div>
+          <div class="tws-flow_arrow" aria-hidden="true">${arrow}</div>
+          <div class="tws-flow_prompt">${esc(r.prompt)}</div>
+        </div>`)
+      .join("");
+    return `
+      <div class="tws-flow">
+        <div class="tws-flow_head">
+          <div class="tws-flow_head-aspect">${esc(headLeft || "TWS")}</div>
+          <div class="tws-flow_head-spacer" aria-hidden="true"></div>
+          <div class="tws-flow_head-prompt">${esc(headRight || "Meditation Prompt")}</div>
+        </div>
+        <div class="tws-flow_rows">${rowsHtml}</div>
+      </div>`;
+  });
+
   eleventyConfig.setLibrary("md", markdownIt);
 
   return {

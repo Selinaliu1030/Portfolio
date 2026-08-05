@@ -27,11 +27,8 @@ features:
       - body: "When the system detects the user being interrupted, when the user comes back, the system will guide the user to the StreamSync page, where the user can mind-dump the task they were doing before the interruption and the interruption event. The background of the mind-dump page is a swimming goldfish, symbolizing the mid-flow and making the user feel more calm."
   - tag: "Core features 2"
     title: "Customized Meditation"
-    images:
-      - src: images/OpenHCI-期末_1.png
-        alt: "Customized meditation prompt screen"
-      - src: images/Adobe-Express---meditation.gif
-        alt: "Meditation session animation"
+    image: images/Adobe-Express---meditation.gif
+    imageAlt: "Meditation session animation"
     parts:
       - body: "Combining the input of the user in the entering phase and the Time Well Spent framework concept, we engineered the system prompt to ask Gemini to generate a 2-minute customized meditation prompt. Afterwards, through voice AI, the system speaks out the meditation prompt in a gentle, human-like voice tone that not only helps the user calm down but also reflects on the work they've done before being interrupted, gently bridging them toward working again. The background is chosen to be a bit blurred with a warm light color to reduce visual disruption to the user."
   - tag: "core features 3"
@@ -43,6 +40,15 @@ features:
 conclusion:
   learned: "Through this project, I learned how to cooperate with designers as an engineer and incorporate technology into the design solution."
   future: "In the future, we hope to combine StreamSync with a task-tracking system to monitor the user before the interruption, and to better customize the meditation prompt and support work-progress review."
+tws:
+  - aspect: "What I've worked on"
+    prompt: "Input the interruption event"
+  - aspect: "How I worked"
+    prompt: "Sense the present moment"
+  - aspect: "How I feel"
+    prompt: "Feel the body and the emotion"
+  - aspect: "How I take care of myself"
+    prompt: "Back to self condition"
 ---
 {% metaBox skills, person, role, overview %}
 
@@ -69,7 +75,10 @@ Our target audience is **self-paced knowledge workers** who highly value efficie
 
 {% prototypeCallout prototype %}
 
-{% for f in features %}{% featureBlock f %}{% endfor %}
+{% featureBlock features[0] %}
+{% featureBlock features[1] %}
+{% twsFlowDiagram tws %}
+{% featureBlock features[2] %}
 
 {% section "competitors", "Current Market" %}
 Traditional time-management and productivity tools focus on preventing interruptions, through schedules, focus timers, or notification blocking, rather than helping users recover after being interrupted. Once the flow is broken, they offer little support for restoring context or easing the negative emotions that follow. StreamSync targets this gap by centering on work-progress tracking and guided post-interruption recovery, aiming to address frustration and anxiety at the root instead of merely avoiding interruptions.
