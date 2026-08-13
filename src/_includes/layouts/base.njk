@@ -3,7 +3,7 @@
 <head>
 {% include "partials/head.njk" %}
 </head>
-<body>
+<body{% if currentPage == "home" %} class="is-home"{% endif %}>
   <div class="page-wrapper">
 {% include "partials/nav.njk" %}
     <div class="main-wrapper">
