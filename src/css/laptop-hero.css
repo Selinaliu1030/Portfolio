@@ -16,14 +16,43 @@
    Sitewide nav/footer restyle — every page, not just the homepage.
    --------------------------------------------------------------------- */
 
+.navbar_logo-wrap {
+  top: 0;
+  display: flex;
+  align-items: center;
+}
+
+.navbar_logo-text {
+  font-family: var(--_typography---font-family--primary);
+  font-weight: var(--_typography---font-weight--black);
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+  color: var(--home-dark-green);
+}
+
+.navbar_logo-dot {
+  color: var(--home-coral);
+}
+
 .navbar_links-wrap {
   background-color: var(--home-dark-green);
 }
 
 .button:where(.w-variant-994e88c4-baec-2bbf-d0b3-8a2991a92ab2) {
+  border-radius: 999px;
   background-image: none;
   background-color: var(--home-coral);
   color: #fff;
+  transition: filter 0.2s ease;
+}
+
+.button:where(.w-variant-994e88c4-baec-2bbf-d0b3-8a2991a92ab2):hover {
+  filter: brightness(1.08);
+}
+
+.button_inner:where(.w-variant-994e88c4-baec-2bbf-d0b3-8a2991a92ab2),
+.button_inner:where(.w-variant-994e88c4-baec-2bbf-d0b3-8a2991a92ab2):hover {
+  box-shadow: none;
 }
 
 .footer_wrap {
@@ -60,14 +89,45 @@ body.is-home .work-list_component h2 {
   color: var(--home-dark-green);
 }
 
-body.is-home .work-list_number {
+body.is-home .work-list_number-wrap {
   background-color: var(--home-dark-green);
+}
+
+body.is-home .work-list_number {
   color: var(--home-cream);
+}
+
+body.is-home .work-list_infos h6 {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  font-weight: var(--_typography---font-weight--bold);
 }
 
 body.is-home .text-block-4 {
   color: var(--home-dark-green);
   opacity: 0.65;
+  font-size: 1rem;
+}
+
+.work-list_image-main .image-22 {
+  transition: transform 0.45s cubic-bezier(.22,1,.36,1);
+}
+
+.work-list_block:hover .image-22 {
+  transform: scale(1.06);
+}
+
+/* Initial hidden state for the per-card scroll-reveal — src/js/laptop-hero.js
+   animates these via GSAP (inline styles take over from here once it runs).
+   Matters only for the instant before that JS runs, and as the fallback
+   shown outright for prefers-reduced-motion / no-JS via .is-visible. */
+.work-list_item {
+  opacity: 0;
+  transform: translateY(44px) scale(0.97);
+}
+
+.work-list_item.is-visible {
+  opacity: 1;
+  transform: none;
 }
 
 /* ---------------------------------------------------------------------
@@ -306,11 +366,31 @@ body.is-home .text-block-4 {
 
 .home-hero_intro {
   max-width: 62ch;
-  margin: 20px auto 0;
+  margin: 3rem auto 0;
   font-family: var(--_typography---font-family--secondary);
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.65;
   color: var(--home-dark-green);
+  /* Comes in a beat after .home-hero itself fades in (see .is-visible
+     above), so it reads as its own small "arrival" rather than popping in
+     with everything else at once. */
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+  transition-delay: 0.35s;
+}
+
+.home-hero.is-visible .home-hero_intro {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-hero_intro {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 .home-hero_intro strong {

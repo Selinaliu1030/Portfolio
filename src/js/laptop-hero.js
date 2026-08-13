@@ -54,3 +54,61 @@
     window.addEventListener("load", play);
   }
 })();
+
+// Project list: each card settles in on its own as it scrolls into view,
+// rather than the whole list just being static content that scrolls past
+// — makes each project read as its own "page" instead of one continuous
+// strip. Separate IIFE from the hero above since it's driven by scroll
+// position, not page load.
+(function () {
+  var items = document.querySelectorAll(".work-list_item");
+  if (!items.length) return;
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  function showAll() {
+    items.forEach(function (item) {
+      item.classList.add("is-visible");
+    });
+  }
+
+  function setup() {
+    if (reduceMotion || typeof gsap === "undefined" || typeof IntersectionObserver === "undefined") {
+      showAll();
+      return;
+    }
+
+    // IntersectionObserver rather than ScrollTrigger here: it fires purely
+    // off actual on-screen visibility, so unlike a scrollY-position-based
+    // trigger it has no "this card's trigger point is past the page's max
+    // scroll" edge case to worry about for whichever card ends up last.
+    // One-shot (unobserve after firing) rather than a replay-on-every-visit
+    // like the case-study diagrams in interactive.js — these cards are
+    // read top-to-bottom, so re-hiding one because the user scrolled past
+    // it quickly would just be annoying.
+    var observer = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) return;
+          observer.unobserve(entry.target);
+          gsap.fromTo(
+            entry.target,
+            { y: 44, opacity: 0, scale: 0.97 },
+            { y: 0, opacity: 1, scale: 1, duration: 0.6, ease: "power2.out" }
+          );
+        });
+      },
+      { rootMargin: "0px 0px -10% 0px", threshold: 0.15 }
+    );
+
+    items.forEach(function (item) {
+      observer.observe(item);
+    });
+  }
+
+  if (document.readyState === "complete") {
+    setup();
+  } else {
+    window.addEventListener("load", setup);
+  }
+})();
