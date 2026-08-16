@@ -27,19 +27,35 @@
     laptop.classList.remove("is-open");
     void laptop.offsetWidth;
     laptop.classList.add("is-open");
+    var openStartTime = performance.now();
 
     // The word's on-screen pixel position, measured once the screen
     // content has faded in — .laptop-hero_rig has no real layout box of
     // its own (everything inside it is 3D-positioned/absolute), so a CSS
     // percentage transform-origin can't target the word; only a
     // JS-measured pixel offset can.
-    setTimeout(function () {
+    function measureOrigin() {
       var wordBox = miniWord.getBoundingClientRect();
       var rigBox = rig.getBoundingClientRect();
       var originX = wordBox.x + wordBox.width / 2 - rigBox.x;
       var originY = wordBox.y + wordBox.height / 2 - rigBox.y;
       rig.style.transformOrigin = originX + "px " + originY + "px";
-    }, 1050);
+    }
+
+    setTimeout(measureOrigin, 1050);
+    // The headline font (see --home-font-headline in laptop-hero.css) loads
+    // from Adobe's CDN, not self-hosted, so it can still be mid-fetch at
+    // the 1050ms mark above — measuring the fallback font's metrics would
+    // throw off the word-centering once the real face swaps in. Re-measure
+    // once it's confirmed loaded, as long as that happens before the zoom
+    // itself starts (1740ms) — after that, moving the origin would jump.
+    if (window.document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () {
+        if (!laptop.classList.contains("is-open")) return;
+        var elapsed = performance.now() - openStartTime;
+        if (elapsed < 1700) measureOrigin();
+      });
+    }
 
     rig.addEventListener("animationend", function handler(e) {
       if (e.animationName !== "laptopHeroConsume") return;

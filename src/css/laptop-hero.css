@@ -10,6 +10,11 @@
   --home-sage: #CDCF9E;
   --home-dark-green: #053804;
   --home-coral: #FF6B6B;
+  /* Loaded via the Typekit link in head.njk. Only ships a 400/normal
+     cut — no bold/black weight to reach for — so headline elements using
+     this also need font-weight: 400 set explicitly rather than inheriting
+     the site's usual --font-weight--black. */
+  --home-font-headline: "alphabet-soup-pro", var(--_typography---font-family--primary);
 }
 
 /* ---------------------------------------------------------------------
@@ -250,8 +255,8 @@ body.is-home .text-block-4 {
 
 .mini-hero_line1,
 .mini-hero_line2 {
-  font-family: var(--_typography---font-family--primary);
-  font-weight: var(--_typography---font-weight--black);
+  font-family: var(--home-font-headline);
+  font-weight: 400;
   line-height: 1;
   margin: 0;
   letter-spacing: -0.01em;
@@ -309,7 +314,7 @@ body.is-home .text-block-4 {
 }
 
 .home-hero {
-  max-width: 900px;
+  max-width: 1100px;
   margin: 0 auto;
   /* .laptop-hero collapses to display:none once the zoom sequence hands
      off, so this section becomes the first thing in the page and needs
@@ -320,48 +325,70 @@ body.is-home .text-block-4 {
   text-align: center;
 }
 
-.home-hero_eyebrow {
-  font-family: var(--_typography---font-family--secondary);
-  font-size: 1.15rem;
-  color: var(--home-dark-green);
-  margin: 0 0 4px;
-}
-
-.home-hero_name {
-  line-height: 0.82;
-  margin: 0;
-}
-
 .home-hero_name-word {
-  font-family: var(--_typography---font-family--primary);
-  font-weight: var(--_typography---font-weight--black);
-  font-size: clamp(2.6rem, 9vw, 6.2rem);
+  font-family: var(--home-font-headline);
+  font-weight: 400;
   letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
-.home-hero_name-word.is-portfolio {
-  color: var(--home-dark-green);
-}
-
-.home-hero_name-row {
+/* SEL [photo] INA with PORTFOLIO + tagline tucked into the bottom-right —
+   an absolute-positioned composition inside a fixed-proportion canvas
+   rather than the stacked/centered flow the rest of the page uses,
+   since SEL/INA need to sit independently of the photo's actual height. */
+.home-hero_canvas {
+  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  aspect-ratio: 1440 / 1024;
+  margin: 0 auto;
   display: flex;
-  align-items: center;
   justify-content: center;
-  gap: 0.5vw;
-  margin-top: -1.5vw;
 }
 
-.home-hero_name-word.is-sel,
-.home-hero_name-word.is-ina {
+.home-hero_canvas .home-hero_name-word.is-sel,
+.home-hero_canvas .home-hero_name-word.is-ina {
+  position: absolute;
+  top: 46%;
+  transform: translateY(-50%);
+  font-size: clamp(3.5rem, 15vw, 11rem);
   color: var(--home-coral);
+  z-index: 1;
 }
+.home-hero_canvas .home-hero_name-word.is-sel { left: 13%; }
+.home-hero_canvas .home-hero_name-word.is-ina { right: 13%; }
 
 .home-hero_photo {
-  width: clamp(90px, 14vw, 170px);
-  height: auto;
-  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  height: 96%;
+  width: auto;
+  max-width: 62%;
+  align-self: flex-end;
   object-fit: contain;
   object-position: bottom;
+}
+
+.home-hero_title-block {
+  position: absolute;
+  right: 1%;
+  bottom: 4%;
+  z-index: 3;
+  text-align: right;
+}
+
+.home-hero_title-block .home-hero_name-word.is-portfolio {
+  display: block;
+  font-size: clamp(2.2rem, 6.5vw, 4.75rem);
+  line-height: 1;
+  color: var(--home-dark-green);
+}
+
+.home-hero_tagline {
+  margin: 8px 0 0;
+  font-family: var(--_typography---font-family--secondary);
+  font-size: clamp(1rem, 1.8vw, 1.35rem);
+  color: var(--home-dark-green);
 }
 
 .home-hero_intro {
@@ -399,5 +426,28 @@ body.is-home .text-block-4 {
 
 @media (max-width: 640px) {
   .laptop-hero_rig { width: 78%; }
-  .home-hero_name-row { gap: 2vw; margin-top: -3vw; }
+
+  /* The 1440/1024 canvas proportions read fine wide but come out too
+     short on a narrow phone viewport (~240px tall), leaving no vertical
+     room for SEL/INA, the photo, and PORTFOLIO + tagline to sit apart
+     from each other. A taller ratio gives the same composition room to
+     breathe instead of stacking on top of itself. */
+  .home-hero_canvas {
+    aspect-ratio: 3 / 4;
+  }
+
+  .home-hero_photo {
+    height: 90%;
+    max-width: 58%;
+  }
+
+  .home-hero_title-block {
+    bottom: 1%;
+  }
+
+  /* The 13% inward pull that gives SEL/INA a nice tuck-behind-the-photo
+     overlap on a wide canvas swallows almost the whole word once the
+     canvas is this narrow — pull back to a smaller overlap. */
+  .home-hero_canvas .home-hero_name-word.is-sel { left: 2%; }
+  .home-hero_canvas .home-hero_name-word.is-ina { right: 2%; }
 }
