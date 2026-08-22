@@ -10,6 +10,11 @@
   --home-sage: #CDCF9E;
   --home-dark-green: #053804;
   --home-coral: #FF6B6B;
+  /* Sampled directly from Taski's own in-app screenshots (logo, buttons,
+     badges) — its case-study page keeps this as its accent instead of
+     the shared coral, since the product already has an established
+     orange identity of its own. */
+  --home-taski-orange: #FC8801;
   /* Loaded via the Typekit link in head.njk. Only ships a 400/normal
      cut — no bold/black weight to reach for — so headline elements using
      this also need font-weight: 400 set explicitly rather than inheriting

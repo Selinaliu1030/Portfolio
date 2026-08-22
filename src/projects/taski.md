@@ -14,7 +14,7 @@ thumbnailSrcset: "images/截圖-2025-11-07-下午2.05.37-p-500.png 500w, images/
 skills: "Figma, WireFrame, User Journey Map, Iterative Design"
 person: "Group Project"
 role: "UX Research, Prototyping"
-overview: "Taski is a task-based social matching platform designed for young adults who prefer doing activities with others rather than alone. Instead of relying on appearance or long conversations, Taski connects users through shared tasks — whether it's grabbing a meal, studying together, attending events, or completing everyday errands. By focusing on action first and interaction second, Taski reduces the psychological burden of asking others to join and eliminates the awkwardness of mismatched expectations. The system enables quick, low-commitment pairing, helping users form genuine connections through simple, meaningful moments of doing things together."
+overview: "Taski is a task-based social matching platform for young adults who prefer doing activities with others rather than alone. It connects people through shared tasks instead of appearance or long conversations, reducing the pressure of asking someone to join and the awkwardness of mismatched expectations."
 prototype:
   url: "https://www.figma.com/proto/p1lkTHcLnds23qFoq8ebwH/%E5%88%B0%E5%BA%95%E8%83%BD%E4%B8%8D%E8%83%BD%E5%85%B1%E7%B7%A8%E5%91%A2?page-id=4951%3A2196&node-id=4951-2199&viewport=240%2C306%2C0.11&t=lpEJxt3hBzFZFgrn-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=4951%3A2199&show-proto-sidebar=1"
   icon: images/figma-2.png
@@ -23,6 +23,8 @@ features:
     title: "Participating & Starting up Events"
     image: images/Adobe-Express---螢幕錄影-2025-11-15-中午12.43.03-2-2.gif
     imageAlt: "Participating and starting up events screen"
+    caption: "Browse and filter events, or launch your own with an urgency level that shapes how it's broadcast."
+    portrait: true
     parts:
       - label: "Participate"
         body: "The system will recommend events by algorithm, or the user can use a filter to filter the events. If there's an event that the user is interested in, they can click on \"heart\" to save it, or swipe right to delete. If they want to participate, they can click on the card and answer the questions set by the host, then send an application."
@@ -32,6 +34,8 @@ features:
     title: "Event Matching"
     image: images/Adobe-Express---螢幕錄影-2025-11-15-中午12.50.05.gif
     imageAlt: "Event matching results screen"
+    caption: "See every application's scores at a glance before deciding to accept or reject."
+    portrait: true
     parts:
       - label: "Matching Result Page"
         body: "Here, the successfully matched task will be shown, together with the link to the 1-on-1 chatroom."
@@ -41,12 +45,16 @@ features:
     title: "Chatroom"
     image: images/Adobe-Express---螢幕錄影-2025-11-15-中午12.55.12-2.gif
     imageAlt: "Time-limited chatroom screen"
+    caption: "A countdown keeps the conversation moving toward locking in a real plan."
+    portrait: true
     parts:
       - body: "The chatroom is time-limited in order to put focus on getting the task done. The users have to discuss the meet-up information, like when and where to meet, and create the event within the time limit, or else the chatroom will vanish and the match will be cancelled. The time limit depends on the emergency level the host set up when publishing the task."
   - tag: "core features 4"
     title: "Personal Profile"
     image: images/Adobe-Express---螢幕錄影-2025-11-15-下午1.02.09.gif
     imageAlt: "Personal profile screen"
+    caption: "Photos and a no-show rating build trust before anyone meets in person."
+    portrait: true
     parts:
       - label: "Photo Gallery"
         body: "After the event, the user can upload photos from that event and add captions, not only to keep the memory but also to serve as safety verification for other participants who want to join future events."
@@ -78,11 +86,6 @@ Our target audience focuses on **youth aged 18–30 who prefer not to do activit
 
 **Peripheral Users:** Passive users who are not sure what they want to do. They prefer browsing, quick usage, and easily joining existing tasks.
 **Core Users:** Active users who proactively seek companions for specific tasks or activities they already have in mind.
-
-{% imageRow [
-  { src: "images/young-adult-aged-18-30--confident-and-energetic--a.png", alt: "Confident and energetic young adult persona" },
-  { src: "images/young-adult-aged-18-30--casually-browsing-on-smart.png", alt: "Young adult casually browsing on smartphone persona" }
-] %}
 {% endsection %}
 
 {% prototypeCallout prototype %}
@@ -92,7 +95,7 @@ Our target audience focuses on **youth aged 18–30 who prefer not to do activit
 {% section "competitors", "Current Market" %}
 We analyzed 4 other competitors, and found out that our app has the leading advantage.
 
-![Competitor analysis chart](images/競品.jpg)
+<div class="site-ref-img is-wide"><img src="images/競品.jpg" alt="Competitor analysis chart"></div>
 {% endsection %}
 
 {% section "User needs", "Interview" %}
@@ -100,9 +103,9 @@ We conducted semi-structured interviews to find the real user needs. We intervie
 
 The interviews revealed that some frequently **give up on activities** due to not finding suitable task-buddies. Users desire **fast, low-commitment matching** without long conversations. Awkwardness and **fear of incompatible personalities** are major blockers to finding a task buddy online.
 
-> "Enjoys attending large-scale events with someone to share costs, but finds it stressful to be the host due to the risk of others not showing up. Prefers finding companions who match their vibe and energy." — *Emily, Extrovert*
+<blockquote class="site-quote">"Enjoys attending large-scale events with someone to share costs, but finds it stressful to be the host due to the risk of others not showing up. Prefers finding companions who match their vibe and energy."<cite>Emily, Extrovert</cite></blockquote>
 
-> "Enjoys having someone to share free-time activities with, but often struggles to align schedules or interests with friends, making plans hard to realize. Hopes to find someone with a compatible personality to create meaningful memories together." — *Amy, Introvert*
+<blockquote class="site-quote">"Enjoys having someone to share free-time activities with, but often struggles to align schedules or interests with friends, making plans hard to realize. Hopes to find someone with a compatible personality to create meaningful memories together."<cite>Amy, Introvert</cite></blockquote>
 
 **Insight:**
 
@@ -115,7 +118,7 @@ The interviews revealed that some frequently **give up on activities** due to no
 {% section "User Needs", "User Journey Map" %}
 We identified that our target users want genuine companionship when completing tasks. To better understand their motivations and pain points, we used a user journey map, which allowed us to extract key design insights for further ideation and prototyping.
 
-![User journey map](images/Journey-map.png)
+<div class="site-ref-img is-wide"><img src="images/Journey-map.png" alt="User journey map"></div>
 
 **Insights:**
 1. How Might We make finding a companion quick and easy?
@@ -127,12 +130,12 @@ We identified that our target users want genuine companionship when completing t
 **CityWanderer**
 CityWanderer Challenge is a 3-week summer camp that blends travel, social interaction, and game-like exploration to help young people build genuine human connections. This challenge gave *Taski* the idea of task-based social matching to build genuine friendship.
 
-![CityWanderer reference](images/default-cover-fb7b9fdd099dfe40f2cb7c56eab20b2c.png)
+<div class="site-ref-img"><img src="images/default-cover-fb7b9fdd099dfe40f2cb7c56eab20b2c.png" alt="CityWanderer reference"><p class="site-ref-caption">Reference: CityWanderer Challenge</p></div>
 
 **MeetUp**
 Meetup is a platform that helps people connect through interest-based events. Users can discover activities that match their hobbies and join or host their own events. Meetup's approach to hosting and joining events through an online platform inspired Taski's task-launching design.
 
-![Meetup reference logo](images/Meetup-Logo-2016-present.png)
+<div class="site-ref-img"><img src="images/Meetup-Logo-2016-present.png" alt="Meetup reference logo"><p class="site-ref-caption">Reference: Meetup</p></div>
 {% endsection %}
 
 {% section "Prototype", "Wireframe" %}

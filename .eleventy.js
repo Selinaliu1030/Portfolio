@@ -22,22 +22,23 @@ module.exports = function (eleventyConfig) {
     });
   });
 
-  // Metadata box: Skills / Person / Role / Project Overview
+  // Metadata box: Skills / Person / Role / Project Overview — a row of
+  // small labeled facts plus the overview as a plain paragraph, sitting
+  // straight on the page (see .meta-box in site.css) rather than a
+  // boxed dt/dd grid.
   eleventyConfig.addShortcode("metaBox", function (skills, person, role, overview) {
     return `
       <section class="section-work-content">
         <div class="padding-section-large is-tablet-smaller"></div>
         <div class="padding-global">
           <div class="container-medium">
-            <div class="work-content_grid">
-              <div class="text-style-label">Skills: </div>
-              <p class="paragraph">${esc(skills)}</p>
-              <div class="text-style-label">Person: </div>
-              <p class="paragraph">${esc(person)}</p>
-              <div class="text-style-label">Role: </div>
-              <p class="paragraph">${esc(role)}</p>
-              <div class="text-style-label">Project Overview: </div>
-              <p class="paragraph">${esc(overview)}</p>
+            <div class="meta-box">
+              <ul class="meta-facts">
+                <li><span class="meta-facts_label">Skills</span>${esc(skills)}</li>
+                <li><span class="meta-facts_label">Person</span>${esc(person)}</li>
+                <li><span class="meta-facts_label">Role</span>${esc(role)}</li>
+              </ul>
+              <p class="meta-overview">${esc(overview)}</p>
             </div>
           </div>
         </div>
@@ -69,20 +70,37 @@ module.exports = function (eleventyConfig) {
   });
 
   // Repeatable feature block: variable number per project, each with 1-2
-  // labeled parts (e.g. "Patient Side" / "Caregiver Side").
+  // labeled parts (e.g. "Patient Side" / "Caregiver Side"). Images render
+  // inside a clickable frame (see .site-feature-frame in site.css and
+  // src/js/site-lightbox.js) that opens a larger view on click — the
+  // frame + lightbox are new, but apply to every project page since the
+  // "raw native pixel size" bug they fix isn't StreamSync-specific.
   eleventyConfig.addShortcode("featureBlock", function (f) {
     const partsHtml = (f.parts || [])
       .map((p) => p.label
         ? `<strong>${esc(p.label)}<br>‍</strong>${markdownIt.renderInline(p.body)}`
         : markdownIt.renderInline(p.body))
       .join("<br>‍<br>‍");
+    function frame(src, alt, caption, portrait) {
+      const cap = caption
+        ? `<p class="site-feature-caption">${markdownIt.renderInline(esc(caption))}</p>`
+        : "";
+      const mod = portrait ? " is-portrait" : "";
+      return `
+        <figure class="site-feature-figure${mod}">
+          <div class="site-feature-frame${mod}">
+            <img loading="lazy" src="${esc(src)}" alt="${esc(alt || "")}" class="site-feature-img">
+            <span class="site-feature-frame_expand" aria-hidden="true">⤢</span>
+          </div>${cap}
+        </figure>`;
+    }
     let img = "";
     if (f.images && f.images.length) {
       img = `<div class="w-layout-hflex site-image-row">${f.images
-        .map((i) => `<img loading="lazy" src="${esc(i.src)}" alt="${esc(i.alt || "")}" class="site-feature-img">`)
+        .map((i) => frame(i.src, i.alt, i.caption, i.portrait || f.portrait))
         .join("")}</div>`;
     } else if (f.image) {
-      img = `<img loading="lazy" src="${esc(f.image)}" alt="${esc(f.imageAlt || "")}" class="site-feature-img">`;
+      img = frame(f.image, f.imageAlt, f.caption, f.portrait);
     }
     return `
       <section class="section-work-content">

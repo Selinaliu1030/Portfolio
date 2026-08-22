@@ -3,7 +3,7 @@
 <head>
 {% include "partials/head.njk" %}
 </head>
-<body{% if currentPage == "home" %} class="is-home"{% endif %}>
+<body{% if currentPage == "home" %} class="is-home"{% elif page.fileSlug == "streamsync" %} class="is-streamsync"{% elif page.fileSlug == "taski" %} class="is-taski"{% endif %}>
   <div class="page-wrapper">
 {% include "partials/nav.njk" %}
     <div class="main-wrapper">
