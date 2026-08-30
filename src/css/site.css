@@ -51,6 +51,591 @@
   opacity: 0.65;
 }
 
+/* Two (or more) quotes side by side instead of stacked — each quote
+   drops its own max-width since the row's column width already limits
+   line length. */
+.site-quote-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  width: 100%;
+}
+.site-quote-row .site-quote {
+  flex: 1 1 280px;
+  max-width: none;
+}
+
+/* Insight bar charts (insightBars shortcode) — replaces a flattened
+   chart image with live, scroll-revealed bars. Two groups side by side
+   (e.g. Pull Factors / Push Factors), each its own card. */
+.insight-bars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  width: 100%;
+}
+@media (max-width: 700px) {
+  .insight-bars {
+    grid-template-columns: 1fr;
+  }
+}
+
+.insight-bars_group {
+  background: var(--_colors---primary--beige);
+  border: 1px solid var(--_colors---grey--100);
+  border-radius: 14px;
+  padding: 24px;
+}
+
+.insight-bars_title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0 0 18px;
+  color: var(--_colors---primary--black);
+}
+
+.insight-bars_rows {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.insight-bar_row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas: "label value" "track track";
+  row-gap: 6px;
+  align-items: baseline;
+}
+.insight-bar_label {
+  grid-area: label;
+  font-size: 0.88rem;
+  color: var(--_colors---grey--300);
+}
+.insight-bar_value {
+  grid-area: value;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--_colors---primary--black);
+  font-variant-numeric: tabular-nums;
+}
+.insight-bar_track {
+  grid-area: track;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--_colors---grey--100);
+  overflow: hidden;
+}
+.insight-bar_fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--_colors---primary--black);
+  transform: scaleX(0);
+  transform-origin: left;
+}
+.insight-bar_fill.is-visible {
+  transform: scaleX(1);
+}
+
+/* Problem & Goals — "the shift" diagram (old model struck through → new
+   model) plus expandable finding cards, replacing a flat Problem/Goals
+   bullet list (design handoff: "Portfolio Readability Interaction
+   Design", option 2a). Colors here use the site's generic tokens as a
+   neutral default; body.is-taski below remaps them onto its own
+   palette. Labels reuse the site's existing Roboto Mono ("detail"
+   family) in the handoff's JetBrains Mono role — same job, already
+   self-hosted. Spacing/radii/sizes/motion timings follow the handoff. */
+/* No background/padding/radius of its own — sits flush in the section's
+   normal text flow instead of reading as a separate boxed-in widget.
+   The shift diagram's two colored panels below carry the visual weight
+   this needs; everything else is plain content matching the rest of
+   the page's typography. */
+.problem-goals {
+  width: 100%;
+}
+
+.problem-goals_eyebrow {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--_colors---grey--300);
+}
+
+.problem-goals_shift {
+  display: grid;
+  grid-template-columns: 1fr 64px 1fr;
+  align-items: center;
+  gap: 8px;
+  margin-top: 26px;
+}
+@media (max-width: 720px) {
+  .problem-goals_shift {
+    grid-template-columns: 1fr;
+  }
+  .problem-goals_shift-arrow {
+    transform: rotate(90deg);
+  }
+}
+
+.problem-goals_shift-panel {
+  border-radius: 14px;
+  padding: 20px 22px;
+}
+.problem-goals_shift-panel.is-from {
+  background: rgba(0, 0, 0, 0.06);
+}
+.problem-goals_shift-panel.is-to {
+  background: var(--_colors---primary--black);
+}
+
+.problem-goals_shift-kicker {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.problem-goals_shift-panel.is-from .problem-goals_shift-kicker {
+  color: var(--_colors---grey--300);
+}
+.problem-goals_shift-panel.is-to .problem-goals_shift-kicker {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.problem-goals_shift-headline {
+  font-size: clamp(1.15rem, 2vw, 1.5rem);
+  line-height: 1.25;
+  font-weight: 700;
+}
+.problem-goals_shift-panel.is-from .problem-goals_shift-headline {
+  color: var(--_colors---grey--300);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: var(--_colors---grey--200);
+}
+.problem-goals_shift-panel.is-to .problem-goals_shift-headline {
+  color: #fff;
+}
+
+.problem-goals_shift-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  color: var(--_colors---primary--black);
+}
+
+.problem-goals_outcome {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  font-size: 17px;
+  color: var(--_colors---grey--400);
+}
+.problem-goals_dot {
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--_colors---primary--black);
+}
+.problem-goals_outcome strong {
+  font-weight: 700;
+  color: var(--_colors---primary--black);
+}
+
+.problem-goals_findings-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  margin: 44px 0 20px;
+  padding-top: 30px;
+  border-top: 1px solid var(--_colors---grey--100);
+}
+@media (max-width: 520px) {
+  .problem-goals_findings-head {
+    flex-direction: column;
+    gap: 4px;
+  }
+}
+.problem-goals_hint {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 12px;
+  color: var(--_colors---grey--300);
+}
+
+.problem-goals_cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Plain list rows, not boxed cards — a bottom border separates each
+   finding instead of a background+shadow, so the list reads as page
+   content rather than a stack of inserted widgets. Background only
+   ever shifts subtly (open state), never becomes an opaque card. */
+.problem-goals_card {
+  padding: 18px 0;
+  border-bottom: 1px solid var(--_colors---grey--100);
+  transition: background-color 0.2s ease;
+}
+.problem-goals_cards .problem-goals_card:last-child {
+  border-bottom: none;
+}
+.problem-goals_card:hover,
+.problem-goals_card.is-open {
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.problem-goals_card-head {
+  all: unset;
+  cursor: pointer;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+}
+@media (max-width: 520px) {
+  .problem-goals_card-head {
+    flex-wrap: wrap;
+  }
+}
+
+.problem-goals_index {
+  flex: 0 0 auto;
+  font-family: var(--_typography---font-family--detail);
+  font-size: 12px;
+  padding-top: 6px;
+  color: var(--_colors---grey--200);
+}
+
+.problem-goals_card-title {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--_colors---primary--black);
+}
+.problem-goals_card-title strong {
+  font-weight: 700;
+}
+
+.problem-goals_pill {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--_typography---font-family--detail);
+  font-size: 12px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--_colors---grey--100);
+  color: var(--_colors---primary--black);
+}
+.problem-goals_caret {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.problem-goals_card.is-open .problem-goals_caret {
+  transform: rotate(180deg);
+}
+
+.problem-goals_card-body {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.problem-goals_card.is-open .problem-goals_card-body {
+  max-height: 240px;
+  opacity: 1;
+}
+.problem-goals_card-body p {
+  margin: 16px 0 0 28px;
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--_colors---grey--300);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .problem-goals_card-body,
+  .problem-goals_caret,
+  .problem-goals_card {
+    transition: none;
+  }
+}
+
+/* Journey map — an emotion curve where hovering/focusing a point shows
+   only that stage's Experience/Opportunity, replacing a dense flattened
+   table image (design handoff: "Portfolio Readability Interaction
+   Design", journey-map option 3a). The scenario/stats header stays
+   plain text (no heavy frame around it) so it reads as page content;
+   only the chart itself gets a light card, same treatment as
+   .insight-bars_group. Colors are 3-tier mood classes (low/neutral/
+   high) mapped onto each page's own tokens below, not the handoff's
+   standalone hex values. See src/js/journey-map.js for the interaction;
+   the JS reads --mood-color via getComputedStyle rather than
+   duplicating the color logic there. */
+.journey-map {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.journey-map_header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.journey-map_eyebrow {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--_colors---grey--300);
+  margin-bottom: 8px;
+}
+
+.journey-map_scenario {
+  max-width: 52ch;
+}
+.journey-map_scenario p {
+  margin: 0;
+  font-size: 1.1rem;
+  line-height: 1.4;
+  color: var(--_colors---primary--black);
+}
+
+.journey-map_stats {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+}
+.journey-map_stat-label {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--_colors---grey--300);
+}
+.journey-map_stat-value {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--_colors---primary--black);
+  margin-top: 4px;
+}
+
+.journey-map_chart-card {
+  background: var(--_colors---primary--beige);
+  border-radius: 18px;
+  padding: 28px 24px 26px;
+}
+
+.journey-map_chart-scroll {
+  overflow-x: auto;
+}
+
+.journey-map_svg {
+  display: block;
+  width: 100%;
+  min-width: 640px;
+  height: auto;
+  overflow: visible;
+}
+
+.journey-map_grid {
+  stroke: var(--_colors---grey--100);
+  stroke-width: 1;
+  stroke-dasharray: 4 6;
+}
+.journey-map_axis {
+  font-family: "Space Grotesk", var(--_typography---font-family--primary);
+  font-size: 14px;
+  fill: var(--_colors---grey--300);
+}
+
+.journey-map_line {
+  fill: none;
+  stroke: var(--_colors---primary--black);
+  stroke-width: 3;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke-dasharray: 1200;
+  animation: journeyMapDraw 1.5s cubic-bezier(0.4, 0, 0.2, 1) 0.15s both;
+}
+
+.journey-map_pulse {
+  fill: none;
+  stroke-width: 3;
+  animation: journeyMapPulse 1.6s ease-out infinite;
+  transition: cx 0.35s ease, cy 0.35s ease;
+}
+
+.journey-map_dot {
+  fill: var(--_colors---primary--beige);
+  cursor: pointer;
+  transition: r 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), fill 0.25s ease;
+  animation: journeyMapPop 0.5s ease-out both;
+  animation-delay: calc(0.5s + var(--dot-i, 0) * 0.25s);
+}
+.journey-map_dot:nth-child(1) { --dot-i: 0; }
+.journey-map_dot:nth-child(2) { --dot-i: 1; }
+.journey-map_dot:nth-child(3) { --dot-i: 2; }
+.journey-map_dot:nth-child(4) { --dot-i: 3; }
+.journey-map_dot:nth-child(5) { --dot-i: 4; }
+.journey-map_dot:nth-child(6) { --dot-i: 5; }
+
+.journey-map_dot[data-mood="low"] { --mood-color: var(--home-coral, #f5715c); }
+.journey-map_dot[data-mood="neutral"] { --mood-color: var(--home-sage, #f0b429); }
+.journey-map_dot[data-mood="high"] { --mood-color: var(--home-taski-orange, #2e8b57); }
+.journey-map_dot {
+  stroke: var(--mood-color);
+}
+.journey-map_dot.is-active {
+  r: 15;
+  fill: var(--mood-color);
+  fill-opacity: 0.7;
+}
+
+.journey-map_hit {
+  cursor: pointer;
+}
+
+.journey-map_spark {
+  animation: journeyMapSpark 0.7s ease-out both;
+}
+
+.journey-map_labels {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 10px;
+  margin: 22px 0 0 76px;
+}
+.journey-map_label {
+  all: unset;
+  cursor: pointer;
+  box-sizing: border-box;
+  text-align: left;
+  width: 100%;
+  padding: 12px 4px 0;
+  border-top: 3px solid transparent;
+  font-family: var(--_typography---font-family--primary);
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--_colors---primary--black);
+  opacity: 0.42;
+  transition: opacity 0.2s ease;
+}
+.journey-map_label[data-mood="low"] { border-top-color: var(--home-coral, #f5715c); }
+.journey-map_label[data-mood="neutral"] { border-top-color: var(--home-sage, #f0b429); }
+.journey-map_label[data-mood="high"] { border-top-color: var(--home-taski-orange, #2e8b57); }
+.journey-map_label.is-active {
+  opacity: 1;
+}
+
+.journey-map_panels {
+  margin-top: 28px;
+  padding-top: 26px;
+  border-top: 1px solid var(--_colors---grey--100);
+}
+.journey-map_panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 44px;
+}
+.journey-map_panel[hidden] {
+  display: none;
+}
+.journey-map_col-label {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.journey-map_col-label.is-experience {
+  color: var(--_colors---grey--400);
+}
+.journey-map_col-label.is-opportunity {
+  color: var(--_colors---primary--black);
+}
+.journey-map_panel ul {
+  margin: 0;
+  padding-left: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--_colors---grey--400);
+}
+
+@keyframes journeyMapDraw {
+  from { stroke-dashoffset: 1200; }
+  to { stroke-dashoffset: 0; }
+}
+@keyframes journeyMapPop {
+  0% { opacity: 0; transform: scale(0.2); }
+  60% { opacity: 1; }
+  100% { opacity: 1; transform: scale(1); }
+}
+@keyframes journeyMapPulse {
+  0% { r: 14; opacity: 0.55; }
+  70% { r: 30; opacity: 0; }
+  100% { r: 30; opacity: 0; }
+}
+@keyframes journeyMapSpark {
+  0% { opacity: 0; transform: scale(0.4); }
+  40% { opacity: 1; }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+@media (max-width: 900px) {
+  .journey-map_panel {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  /* The 76px left margin aligns the label row with the chart's y-axis
+     labels at the design's ~1180px width — at mobile widths it eats too
+     much of an already-narrow row, squeezing 6 columns of text (some
+     multi-word, like "Send Application") down to illegible slivers. */
+  .journey-map_labels {
+    margin-left: 0;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 16px;
+  }
+  .journey-map_label {
+    font-size: 13px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .journey-map_line {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  .journey-map_dot {
+    animation: none;
+  }
+  .journey-map_pulse {
+    animation: none;
+    opacity: 0;
+  }
+  .journey-map_spark {
+    animation: none;
+    display: none;
+  }
+}
+
 .site-image-row > img,
 .site-image-row > figure {
   flex: 1 1 0;
@@ -63,6 +648,59 @@
 
 .site-image-row figcaption {
   margin-top: 8px;
+}
+
+/* Final-prototype callout icon (prototypeCallout shortcode) — reuses
+   .site-image-row for layout, but that class's `> img { flex:1 1 0;
+   min-width:220px }` rule is meant for feature-sized images, not a small
+   icon, and was stretching the 512x512 source icon to fill the row.
+   Selector needs to match `.site-image-row > img`'s specificity (class +
+   element) to actually win; a plain `.site-prototype-icon` class alone
+   was losing to that rule's min-width and rendering at 220px anyway. */
+.site-image-row > img.site-prototype-icon {
+  flex: 0 0 auto;
+  min-width: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+/* Final-prototype callout link — icon + label + arrow that respond
+   together on hover, instead of a static row of content. Tinted rather
+   than plain white, with a flat "sticker" shadow at rest (same offset-
+   shadow language as the .site-feature-frame.is-portrait screenshots)
+   that lifts into a soft floating shadow on hover. */
+.site-prototype-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 22px 14px 14px;
+  border-radius: 999px;
+  border: none;
+  background: var(--_colors---primary--beige);
+  box-shadow: 0 4px 0 var(--_colors---grey--100);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+.site-prototype-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.3);
+}
+.site-prototype-link:hover .site-prototype-icon {
+  transform: scale(1.08) rotate(-4deg);
+}
+.site-prototype-link .site-prototype-icon {
+  transition: transform 0.2s ease;
+}
+.site-prototype-link_arrow {
+  display: inline-block;
+  margin-left: 2px;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.site-prototype-link:hover .site-prototype-link_arrow {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* Feature images (featureBlock shortcode) — framed instead of rendering
@@ -79,8 +717,7 @@
   position: relative;
   border-radius: 16px;
   overflow: hidden;
-  border: 3px solid var(--_colors---primary--black);
-  background: #000;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15), 0 8px 20px -8px rgba(0, 0, 0, 0.25);
   cursor: zoom-in;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
@@ -142,6 +779,31 @@
   height: 100%;
   object-fit: cover;
   object-position: top;
+}
+
+/* Text beside the screenshot instead of stacked above it — pairs with
+   .is-portrait's fixed 260px-wide frame, which leaves enough room next
+   to a reasonable text-column width even on a laptop-width viewport. */
+.site-feature-row.is-portrait {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 48px;
+}
+.site-feature-row.is-portrait .site-feature-text {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.site-feature-row.is-portrait .site-feature-media {
+  flex: 0 0 auto;
+}
+@media (max-width: 860px) {
+  .site-feature-row.is-portrait {
+    flex-direction: column;
+  }
 }
 
 /* Reference/citation images embedded directly in a section's markdown
@@ -221,6 +883,13 @@
   margin: 0;
   padding: 0;
   list-style: none;
+}
+
+/* Skills tends to run long (a comma-separated tool list), so it gets its
+   own row instead of wrapping unpredictably against Person/Role — those
+   two stay together on the row below since they're both short. */
+.meta-facts_full {
+  flex-basis: 100%;
 }
 
 /* Monospace, not the site's usual body font — keeps these short facts
@@ -637,6 +1306,15 @@ body.is-streamsync .line {
   border-top-color: var(--home-sage);
 }
 
+body.is-streamsync .site-prototype-link {
+  background: var(--home-pale-yellow);
+  box-shadow: 0 4px 0 var(--home-sage);
+}
+body.is-streamsync .site-prototype-link_arrow {
+  color: var(--home-coral);
+  font-weight: 700;
+}
+
 /* ---------------------------------------------------------------------
    Taski case study restyle. Same shared markup/scoping approach as
    StreamSync above, but with Taski's own established orange as the
@@ -694,6 +1372,159 @@ body.is-taski .text-block-3 {
 
 body.is-taski .line {
   border-top-color: var(--home-sage);
+}
+
+body.is-taski .site-prototype-link {
+  background: var(--home-pale-yellow);
+  box-shadow: 0 4px 0 var(--home-sage);
+}
+body.is-taski .site-prototype-link_arrow {
+  color: var(--home-taski-orange);
+  font-weight: 700;
+}
+
+/* Pull factors (what draws people in) get the same dark-green as the
+   rest of the page's text; push factors (what drives them away) get
+   the accent orange — the color split carries the pull/push meaning,
+   not just decoration. */
+body.is-taski .insight-bars_group {
+  background: var(--home-pale-yellow);
+  border-color: var(--home-sage);
+}
+body.is-taski .insight-bars_title,
+body.is-taski .insight-bar_value {
+  color: var(--home-dark-green);
+}
+body.is-taski .insight-bar_label {
+  color: var(--home-dark-green);
+  opacity: 0.65;
+}
+body.is-taski .insight-bar_track {
+  background: #fff;
+}
+body.is-taski .insight-bars_group.is-a .insight-bar_fill {
+  background: var(--home-dark-green);
+}
+body.is-taski .insight-bars_group.is-b .insight-bar_fill {
+  background: var(--home-taski-orange);
+}
+
+/* Problem & Goals remapped onto Taski's own tokens: the "new model"
+   panel/dot use the brand orange (the handoff used its own standalone
+   accent green) instead of introducing a third color scheme alongside
+   the page's established pale-yellow/dark-green/orange set. */
+body.is-taski .problem-goals_eyebrow,
+body.is-taski .problem-goals_hint {
+  color: var(--home-dark-green);
+  opacity: 0.6;
+}
+body.is-taski .problem-goals_shift-panel.is-from {
+  background: color-mix(in srgb, var(--home-dark-green) 7%, transparent);
+}
+body.is-taski .problem-goals_shift-panel.is-from .problem-goals_shift-kicker,
+body.is-taski .problem-goals_shift-panel.is-from .problem-goals_shift-headline {
+  color: var(--home-dark-green);
+  opacity: 0.55;
+}
+body.is-taski .problem-goals_shift-panel.is-from .problem-goals_shift-headline {
+  text-decoration-color: color-mix(in srgb, var(--home-dark-green) 45%, transparent);
+}
+body.is-taski .problem-goals_shift-panel.is-to {
+  background: var(--home-taski-orange);
+}
+body.is-taski .problem-goals_shift-panel.is-to .problem-goals_shift-kicker {
+  color: rgba(255, 255, 255, 0.75);
+}
+body.is-taski .problem-goals_shift-panel.is-to .problem-goals_shift-headline {
+  color: var(--home-cream);
+}
+body.is-taski .problem-goals_shift-arrow {
+  color: var(--home-dark-green);
+}
+body.is-taski .problem-goals_outcome {
+  color: var(--home-dark-green);
+  opacity: 0.85;
+}
+body.is-taski .problem-goals_outcome strong {
+  color: var(--home-dark-green);
+  opacity: 1;
+}
+body.is-taski .problem-goals_dot {
+  background: var(--home-taski-orange);
+}
+body.is-taski .problem-goals_findings-head {
+  border-top-color: var(--home-sage);
+}
+body.is-taski .problem-goals_card {
+  border-bottom-color: var(--home-sage);
+}
+body.is-taski .problem-goals_card:hover,
+body.is-taski .problem-goals_card.is-open {
+  background: color-mix(in srgb, var(--home-dark-green) 4%, transparent);
+}
+body.is-taski .problem-goals_index {
+  color: var(--home-dark-green);
+  opacity: 0.4;
+}
+body.is-taski .problem-goals_card-title,
+body.is-taski .problem-goals_pill {
+  color: var(--home-dark-green);
+}
+body.is-taski .problem-goals_pill {
+  border-color: var(--home-sage);
+}
+body.is-taski .problem-goals_card-body p {
+  color: var(--home-dark-green);
+  opacity: 0.78;
+}
+
+/* Journey map — mood colors already resolve via the global --home-*
+   tokens (defined unscoped in laptop-hero.css), no override needed
+   there. This just remaps the neutral beige/black defaults onto
+   Taski's own pale-yellow/dark-green so the chart matches every other
+   card on the page instead of falling back to generic site tones. */
+body.is-taski .journey-map_eyebrow,
+body.is-taski .journey-map_stat-label,
+body.is-taski .journey-map_axis {
+  color: var(--home-dark-green);
+  opacity: 0.6;
+}
+body.is-taski .journey-map_scenario p,
+body.is-taski .journey-map_stat-value {
+  color: var(--home-dark-green);
+}
+/* White, not pale-yellow — the card needs to stand out clearly from
+   the cream page behind it, and give the dark-green line, colored dots,
+   and gridlines real contrast to sit against instead of everything
+   sitting in the same narrow band of warm yellow tones. */
+body.is-taski .journey-map_chart-card {
+  background: #fff;
+}
+body.is-taski .journey-map_grid {
+  stroke: color-mix(in srgb, var(--home-sage) 55%, transparent);
+}
+body.is-taski .journey-map_line {
+  stroke: var(--home-dark-green);
+}
+body.is-taski .journey-map_dot {
+  fill: #fff;
+}
+body.is-taski .journey-map_label {
+  color: var(--home-dark-green);
+}
+body.is-taski .journey-map_panels {
+  border-top-color: var(--home-sage);
+}
+body.is-taski .journey-map_col-label.is-experience {
+  color: var(--home-dark-green);
+  opacity: 0.65;
+}
+body.is-taski .journey-map_col-label.is-opportunity {
+  color: var(--home-taski-orange);
+}
+body.is-taski .journey-map_panel ul {
+  color: var(--home-dark-green);
+  opacity: 0.85;
 }
 
 body.is-taski .site-quote {

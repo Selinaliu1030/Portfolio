@@ -34,7 +34,7 @@ module.exports = function (eleventyConfig) {
           <div class="container-medium">
             <div class="meta-box">
               <ul class="meta-facts">
-                <li><span class="meta-facts_label">Skills</span>${esc(skills)}</li>
+                <li class="meta-facts_full"><span class="meta-facts_label">Skills</span>${esc(skills)}</li>
                 <li><span class="meta-facts_label">Person</span>${esc(person)}</li>
                 <li><span class="meta-facts_label">Role</span>${esc(role)}</li>
               </ul>
@@ -102,20 +102,36 @@ module.exports = function (eleventyConfig) {
     } else if (f.image) {
       img = frame(f.image, f.imageAlt, f.caption, f.portrait);
     }
+    const head = `
+      <div class="work-content_head">
+        <div class="text-style-label">${esc(f.tag)}</div>
+        <h2 class="heading-style-h3">${esc(f.title)}</h2>
+      </div>`;
+    // Portrait screenshots are narrow enough (260px, see .is-portrait in
+    // site.css) to sit beside the text instead of stacked under a full
+    // paragraph's worth of it — landscape features keep the original
+    // stack, where a wide image next to text would just squeeze the text.
+    const content = f.portrait
+      ? `
+        <div class="site-feature-row is-portrait">
+          <div class="site-feature-text">
+            ${head}
+            <p>${partsHtml}</p>
+          </div>
+          <div class="site-feature-media">${img}</div>
+        </div>`
+      : `
+        ${head}
+        <div class="w-layout-vflex site-section-body">
+          <p>${partsHtml}</p>${img}
+        </div>`;
     return `
       <section class="section-work-content">
         <div class="padding-section-large is-tablet-smaller"></div>
         <div class="padding-global">
           <div class="container-medium">
             <div class="work-content_grid">
-              <div class="work-content_content">
-                <div class="work-content_head">
-                  <div class="text-style-label">${esc(f.tag)}</div>
-                  <h2 class="heading-style-h3">${esc(f.title)}</h2>
-                </div>
-                <div class="w-layout-vflex site-section-body">
-                  <p>${partsHtml}</p>${img}
-                </div>
+              <div class="work-content_content">${content}
               </div>
             </div>
           </div>
@@ -144,10 +160,11 @@ module.exports = function (eleventyConfig) {
                     <h2 class="heading-style-h3">Final Prototype</h2>
                   </div>
                 </div>
-                <a href="${esc(prototype.url)}" target="_blank" class="link-block w-inline-block">
+                <a href="${esc(prototype.url)}" target="_blank" class="link-block w-inline-block site-prototype-link">
                   <div class="w-layout-hflex site-image-row">
                     ${icon}
                     <div class="text-block-3">Click to see the final prototype</div>
+                    <span class="site-prototype-link_arrow" aria-hidden="true">→</span>
                   </div>
                 </a>
               </div>
@@ -161,11 +178,196 @@ module.exports = function (eleventyConfig) {
       </section>`;
   });
 
+  // Insight bar charts — replaces a flattened chart image with live,
+  // scroll-revealed bars (see .insight-bars in site.css and the
+  // .insight-bars_group handling in src/js/interactive.js). Takes an
+  // array of {title, items: [{label, value}]} groups, rendered side by
+  // side (e.g. Pull Factors / Push Factors).
+  eleventyConfig.addShortcode("insightBars", function (groups) {
+    function group(g, i) {
+      const rows = (g.items || [])
+        .map(
+          (item) => `
+          <div class="insight-bar_row">
+            <div class="insight-bar_label">${esc(item.label)}</div>
+            <div class="insight-bar_value">${esc(item.value)}%</div>
+            <div class="insight-bar_track"><div class="insight-bar_fill" style="width: ${esc(item.value)}%"></div></div>
+          </div>`
+        )
+        .join("");
+      return `
+        <div class="insight-bars_group is-${i === 0 ? "a" : "b"}">
+          <h3 class="insight-bars_title">${esc(g.title)}</h3>
+          <div class="insight-bars_rows">${rows}</div>
+        </div>`;
+    }
+    return `<div class="insight-bars">${(groups || []).map(group).join("")}</div>`;
+  });
+
+  // Problem & Goals — a "the shift" diagram (old model struck through →
+  // new model) plus expandable finding cards, replacing a flat
+  // Problem/Goals bullet list. See .problem-goals in site.css and the
+  // accordion wiring in src/js/problem-goals.js. Card 0 renders open by
+  // default so the pattern is self-teaching without JS running first.
+  eleventyConfig.addShortcode("problemGoals", function (data) {
+    const findings = (data.findings || [])
+      .map((f, i) => {
+        const idx = String(i + 1).padStart(2, "0");
+        const isOpen = i === 0;
+        return `
+        <div class="problem-goals_card${isOpen ? " is-open" : ""}">
+          <button type="button" class="problem-goals_card-head" aria-expanded="${isOpen}" aria-controls="pg-body-${i}">
+            <span class="problem-goals_index">${idx}</span>
+            <span class="problem-goals_card-title">${markdownIt.renderInline(f.title)}</span>
+            <span class="problem-goals_pill">
+              <span class="problem-goals_pill-label">${isOpen ? "Hide" : "Why it matters"}</span>
+              <span class="problem-goals_caret" aria-hidden="true">&#9662;</span>
+            </span>
+          </button>
+          <div class="problem-goals_card-body" id="pg-body-${i}" role="region">
+            <p>${markdownIt.renderInline(f.body)}</p>
+          </div>
+        </div>`;
+      })
+      .join("");
+    return `
+      <div class="problem-goals">
+        <div class="problem-goals_eyebrow">${esc(data.eyebrow || "The shift")}</div>
+        <div class="problem-goals_shift">
+          <div class="problem-goals_shift-panel is-from">
+            <div class="problem-goals_shift-kicker">${esc(data.from.kicker)}</div>
+            <div class="problem-goals_shift-headline">${esc(data.from.headline)}</div>
+          </div>
+          <div class="problem-goals_shift-arrow" aria-hidden="true">&rarr;</div>
+          <div class="problem-goals_shift-panel is-to">
+            <div class="problem-goals_shift-kicker">${esc(data.to.kicker)}</div>
+            <div class="problem-goals_shift-headline">${esc(data.to.headline)}</div>
+          </div>
+        </div>
+        <div class="problem-goals_outcome">
+          <span class="problem-goals_dot" aria-hidden="true"></span>
+          <span>${markdownIt.renderInline(data.outcome)}</span>
+        </div>
+        <div class="problem-goals_findings-head">
+          <div class="problem-goals_eyebrow">${esc(data.findingsLabel || "Why: 4 findings")}</div>
+          <div class="problem-goals_hint">${esc(data.hint || "Click any card to open")}</div>
+        </div>
+        <div class="problem-goals_cards">${findings}</div>
+      </div>`;
+  });
+
+  // Journey map — an emotion curve where hovering (or focusing) a point
+  // shows only that stage's Experience/Opportunity, replacing a dense
+  // flattened table image. See .journey-map in site.css and
+  // src/js/journey-map.js for the interaction. Each stage's `mood` is
+  // "low" | "neutral" | "high" — a 3-tier classification, not a literal
+  // color, so the actual hex/token stays in CSS (mapped onto the site's
+  // own palette per page rather than the handoff's standalone colors).
+  eleventyConfig.addShortcode("journeyMap", function (data) {
+    const stages = data.stages || [];
+    const curvePoints = stages.map((s) => s.point.join(",")).join(" ");
+
+    const dots = stages
+      .map(
+        (s, i) => `
+          <circle class="journey-map_dot" data-index="${i}" data-mood="${esc(s.mood)}" cx="${s.point[0]}" cy="${s.point[1]}" r="9" stroke-width="4" tabindex="-1"></circle>`
+      )
+      .join("");
+
+    const hits = stages
+      .map(
+        (s, i) => `
+          <circle class="journey-map_hit" data-index="${i}" cx="${s.point[0]}" cy="${s.point[1]}" r="34"></circle>`
+      )
+      .join("");
+
+    const labels = stages
+      .map(
+        (s, i) => `
+          <button type="button" class="journey-map_label" data-index="${i}" data-mood="${esc(s.mood)}" aria-pressed="${i === 0}">${esc(s.name)}</button>`
+      )
+      .join("");
+
+    const panels = stages
+      .map((s, i) => {
+        const exp = (s.experience || []).map((e) => `<li>${markdownIt.renderInline(e)}</li>`).join("");
+        const opp = (s.opportunity || []).map((o) => `<li>${markdownIt.renderInline(o)}</li>`).join("");
+        return `
+          <div class="journey-map_panel" data-index="${i}"${i === 0 ? "" : ' hidden'}>
+            <div class="journey-map_col">
+              <div class="journey-map_col-label is-experience">Experience: ${esc(s.name)}</div>
+              <ul>${exp}</ul>
+            </div>
+            <div class="journey-map_col">
+              <div class="journey-map_col-label is-opportunity">Opportunity</div>
+              <ul>${opp}</ul>
+            </div>
+          </div>`;
+      })
+      .join("");
+
+    return `
+      <div class="journey-map">
+        <div class="journey-map_header">
+          <div class="journey-map_scenario">
+            <div class="journey-map_eyebrow">Scenario</div>
+            <p>${markdownIt.renderInline(data.scenario)}</p>
+          </div>
+          <div class="journey-map_stats">
+            <div class="journey-map_stat">
+              <div class="journey-map_stat-label">Low point</div>
+              <div class="journey-map_stat-value">${esc(data.lowPoint)}</div>
+            </div>
+            <div class="journey-map_stat">
+              <div class="journey-map_stat-label">High point</div>
+              <div class="journey-map_stat-value">${esc(data.highPoint)}</div>
+            </div>
+          </div>
+        </div>
+        <div class="journey-map_chart-card">
+          <div class="journey-map_chart-scroll">
+            <svg class="journey-map_svg" viewBox="0 0 1060 300" role="img" aria-label="${esc(data.chartSummary || "Emotional curve across the journey, from a low point to a high point")}">
+              <line x1="90" y1="70" x2="1040" y2="70" class="journey-map_grid"></line>
+              <line x1="90" y1="160" x2="1040" y2="160" class="journey-map_grid"></line>
+              <line x1="90" y1="250" x2="1040" y2="250" class="journey-map_grid"></line>
+              <text x="76" y="75" text-anchor="end" class="journey-map_axis">Happy</text>
+              <text x="76" y="165" text-anchor="end" class="journey-map_axis">Neutral</text>
+              <text x="76" y="255" text-anchor="end" class="journey-map_axis">Unhappy</text>
+              <polyline points="${curvePoints}" class="journey-map_line"></polyline>
+              <circle class="journey-map_pulse" r="14"></circle>
+              <g class="journey-map_dots">${dots}</g>
+              <g class="journey-map_sparks"></g>
+              <g class="journey-map_hits" fill="transparent">${hits}</g>
+            </svg>
+          </div>
+          <div class="journey-map_labels">${labels}</div>
+          <div class="journey-map_panels">${panels}</div>
+        </div>
+      </div>`;
+  });
+
   // Side-by-side image row — used for Wireframe galleries, Feedback images,
   // or any section with multiple supporting images.
   eleventyConfig.addShortcode("imageRow", function (images) {
     const items = (images || [])
       .map((img) => {
+        // Opt-in per image: reuses the same .site-feature-frame markup
+        // as featureBlock, so it picks up the click-to-enlarge lightbox
+        // (src/js/site-lightbox.js queries that class directly) without
+        // any new JS — existing imageRow calls that don't set this stay
+        // exactly as before.
+        if (img.zoomable) {
+          const cap = img.caption
+            ? `<p class="site-feature-caption">${esc(img.caption)}</p>`
+            : "";
+          return `
+            <figure class="site-feature-figure">
+              <div class="site-feature-frame">
+                <img loading="lazy" sizes="100vw" src="${esc(img.src)}" alt="${esc(img.alt || "")}" class="site-feature-img">
+                <span class="site-feature-frame_expand" aria-hidden="true">⤢</span>
+              </div>${cap}
+            </figure>`;
+        }
         if (img.caption) {
           return `<figure><figcaption>${esc(img.caption)}</figcaption><img loading="lazy" sizes="100vw" src="${esc(img.src)}" alt="${esc(img.alt || "")}"></figure>`;
         }

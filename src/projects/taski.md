@@ -70,21 +70,26 @@ conclusion:
 **Overview:**
 While dating-app usage continues to grow globally, with over 36B+ users, the purpose behind social matching has significantly shifted. According to *Bumble's 2024 Year in Swipe*, users (especially Gen Z) are increasingly using these platforms not for romantic relationships but for sharing lifestyles, finding companions for activities, and expanding their social circles. Similarly, SSRS's 2024 report *The Public and Online Dating* highlights a growing emphasis on "nanoships" (micro-connections), lifestyle compatibility, and task-based interactions, marking a move away from traditional romance-oriented motivations.
 
-**Problem:**
-1. **Appearance-centered evaluation** creates objectification risks and fails to match people based on shared activities
-2. **Gamified reward systems** (likes, swipes, streaks) hinder the formation of genuine, meaningful relationships
-3. **Fast-paced screening** reinforces existing biases and prejudices
-4. **No existing platform** focuses specifically on task-oriented social matching
-
-**Goals:**
-1. Built around doing things together: appearance-based matching → activity-based pairing
-2. Fostering authentic human connection
+{% problemGoals {
+  eyebrow: "The shift",
+  from: { kicker: "Dating apps today", headline: "Appearance-based matching" },
+  to: { kicker: "This product", headline: "Activity-based pairing" },
+  outcome: "Built around doing things together. The outcome we design for is **authentic human connection**.",
+  findingsLabel: "Why: 4 findings",
+  hint: "Click any card to open",
+  findings: [
+    { title: "**Appearance-centered evaluation** creates objectification risks", body: "Ranking on looks means the app never learns what someone actually wants to do. The match ends up built on the wrong signal." },
+    { title: "**Gamified reward systems** hinder genuine relationships", body: "Likes, swipes and streaks reward volume over intent, turning meeting people into a scoring loop." },
+    { title: "**Fast-paced screening** reinforces biases and prejudices", body: "Split-second decisions run on stereotype: with no context, people fall back on what a photo implies." },
+    { title: "**No existing platform** focuses on task-oriented social matching", body: "Competitors optimize for romance or for events, never for pairing two people on one concrete task." }
+  ]
+} %}
 {% endsection %}
 
 {% section "background", "Target Audience" %}
 Our target audience focuses on **youth aged 18–30 who prefer not to do activities alone**. This group can be divided into two segments:
 
-**Peripheral Users:** Passive users who are not sure what they want to do. They prefer browsing, quick usage, and easily joining existing tasks.
+**Peripheral Users:** Passive users who are not sure what they want to do. They prefer browsing, quick usage, and easily joining existing tasks.<br>
 **Core Users:** Active users who proactively seek companions for specific tasks or activities they already have in mind.
 {% endsection %}
 
@@ -103,22 +108,68 @@ We conducted semi-structured interviews to find the real user needs. We intervie
 
 The interviews revealed that some frequently **give up on activities** due to not finding suitable task-buddies. Users desire **fast, low-commitment matching** without long conversations. Awkwardness and **fear of incompatible personalities** are major blockers to finding a task buddy online.
 
+<div class="site-quote-row">
 <blockquote class="site-quote">"Enjoys attending large-scale events with someone to share costs, but finds it stressful to be the host due to the risk of others not showing up. Prefers finding companions who match their vibe and energy."<cite>Emily, Extrovert</cite></blockquote>
 
 <blockquote class="site-quote">"Enjoys having someone to share free-time activities with, but often struggles to align schedules or interests with friends, making plans hard to realize. Hopes to find someone with a compatible personality to create meaningful memories together."<cite>Amy, Introvert</cite></blockquote>
+</div>
 
 **Insight:**
 
-{% imageRow [
-  { src: "images/pull-factor.png", alt: "Pull factor insight chart" },
-  { src: "images/push-fator.png", alt: "Push factor insight chart" }
+{% insightBars [
+  { title: "Motivation: Pull Factors", items: [
+    { label: "Find peers who share similar values and vibes", value: 83 },
+    { label: "Share the cost", value: 43 },
+    { label: "Feel lonely", value: 33 }
+  ] },
+  { title: "Motivation: Push Factors", items: [
+    { label: "Suddenly not feeling like going / got stood up", value: 67 },
+    { label: "Gave up, friends are not available", value: 50 },
+    { label: "Safety concern", value: 50 }
+  ] }
 ] %}
 {% endsection %}
 
 {% section "User Needs", "User Journey Map" %}
-We identified that our target users want genuine companionship when completing tasks. To better understand their motivations and pain points, we used a user journey map, which allowed us to extract key design insights for further ideation and prototyping.
+We identified that our target users want genuine companionship when completing tasks. To better understand their motivations and pain points, we mapped a real scenario end to end, tracking the emotional highs and lows at each stage.
 
-<div class="site-ref-img is-wide"><img src="images/Journey-map.png" alt="User journey map"></div>
+{% journeyMap {
+  scenario: "Amy wants to visit the National Museum and uses Taski to find someone to go with her.",
+  lowPoint: "Send Application",
+  highPoint: "Doing the Task",
+  stages: [
+    {
+      name: "Need", mood: "neutral", point: [140, 165],
+      experience: ["Excited about the idea of going to the museum", "Annoyed by having no one to ask out"],
+      opportunity: ["Task-oriented matching", "A quick, easy way to find a companion"]
+    },
+    {
+      name: "Open & Browse", mood: "neutral", point: [320, 150],
+      experience: ["Excited about the number of relevant options", "Unsure about hosts' credibility and whether they will actually show up"],
+      opportunity: ["A filter to search for the exact event", "Access to host profiles and credibility signals"]
+    },
+    {
+      name: "Send Application", mood: "low", point: [500, 215],
+      experience: ["Stressed about what to write in the self-introduction", "Anxious about the decision, and afraid no one responds"],
+      opportunity: ["A short personality quiz in place of a written self-intro"]
+    },
+    {
+      name: "Match", mood: "neutral", point: [680, 175],
+      experience: ["Decides the date and time in the app chatroom", "Waits a long time for replies, so planning drags"],
+      opportunity: ["A time-limited chatroom that keeps task planning efficient"]
+    },
+    {
+      name: "Task", mood: "high", point: [860, 66],
+      experience: ["Waiting outside the museum, worried the conversation will be awkward if interests don't align", "Visits the National Museum with a new friend"],
+      opportunity: ["Surface the personality-quiz overlap so the pairing feels right before meeting"]
+    },
+    {
+      name: "End", mood: "high", point: [1010, 76],
+      experience: ["Uploads photos to the gallery to record the memory and the new friend"],
+      opportunity: ["A report mechanism for when the task didn't go well"]
+    }
+  ]
+} %}
 
 **Insights:**
 1. How Might We make finding a companion quick and easy?
@@ -142,9 +193,9 @@ Meetup is a platform that helps people connect through interest-based events. Us
 Low fidelity prototype with key features, which was later used for testing.
 
 {% imageRow [
-  { src: "images/wireframe1.png", alt: "Wireframe screen 1" },
-  { src: "images/wireframe2.png", alt: "Wireframe screen 2" },
-  { src: "images/wireframe3.png", alt: "Wireframe screen 3" }
+  { src: "images/wireframe1.png", alt: "Wireframe screen 1", zoomable: true },
+  { src: "images/wireframe2.png", alt: "Wireframe screen 2", zoomable: true },
+  { src: "images/wireframe3.png", alt: "Wireframe screen 3", zoomable: true }
 ] %}
 {% endsection %}
 

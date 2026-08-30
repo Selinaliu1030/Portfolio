@@ -100,6 +100,21 @@
       });
     });
 
+    // Insight bar charts (replaces flattened pull/push-factor chart
+    // images): each group's bars fill in with a stagger, scaleX(0→1)
+    // rather than animating width directly so the reduced-motion
+    // fallback (wireReveal just adds .is-visible) needs no extra logic.
+    document.querySelectorAll(".insight-bars_group").forEach(function (group) {
+      var fills = group.querySelectorAll(".insight-bar_fill");
+      wireReveal(group, fills, function () {
+        var tl = gsap.timeline({ paused: true });
+        fills.forEach(function (el, i) {
+          tl.fromTo(el, { scaleX: 0 }, { scaleX: 1, duration: 0.7, ease: "power2.out" }, i * 0.12);
+        });
+        return tl;
+      });
+    });
+
     // Interview personas + causal chain: cards reveal as a group first,
     // then the 3-step chain reveals left-to-right right after.
     document.querySelectorAll(".persona-chain").forEach(function (chain) {
