@@ -134,6 +134,49 @@
         return tl;
       });
     });
+
+    // About page timeline: whichever entry is crossing the middle of the
+    // viewport is fully visible and the rest dim (see .about-timeline.is-
+    // focus in site.css). Replaces the Webflow interaction the old
+    // timeline markup used. Not wired through wireReveal — this toggles
+    // a class per item rather than playing a timeline, and the reduced-
+    // motion / no-ScrollTrigger fallback is simply never adding
+    // .is-focus, which leaves every entry at full opacity.
+    document.querySelectorAll(".about-timeline").forEach(function (list) {
+      if (reduceMotion || typeof ScrollTrigger === "undefined") return;
+      gsap.registerPlugin(ScrollTrigger);
+      list.classList.add("is-focus");
+      var items = Array.prototype.slice.call(list.querySelectorAll(".about-timeline_item"));
+      // Exactly one entry is active: the one whose center is nearest the
+      // viewport's middle. Per-item enter/leave ranges either overlap
+      // (two lit at once) or leave gaps (none lit) between entries.
+      var current = null;
+      function update() {
+        var mid = window.innerHeight / 2;
+        var best = null;
+        var bestDist = Infinity;
+        items.forEach(function (item) {
+          var r = item.getBoundingClientRect();
+          var dist = Math.abs(r.top + r.height / 2 - mid);
+          if (dist < bestDist) {
+            bestDist = dist;
+            best = item;
+          }
+        });
+        if (best === current) return;
+        if (current) current.classList.remove("is-active");
+        best.classList.add("is-active");
+        current = best;
+      }
+      ScrollTrigger.create({
+        trigger: list,
+        start: "top bottom",
+        end: "bottom top",
+        onUpdate: update,
+        onRefresh: update,
+      });
+      update();
+    });
   }
 
   // Images above these diagrams (hero image, feature GIFs) load
@@ -147,4 +190,20 @@
   } else {
     window.addEventListener("load", setup);
   }
+
+  // `load` doesn't wait for loading="lazy" images below the fold — they
+  // only load as the user scrolls toward them, shifting everything after
+  // them down (The Giver's feature GIFs push its survey chart ~640px)
+  // and leaving the triggers above stale. Re-measure as each one lands.
+  if (typeof ScrollTrigger === "undefined") return;
+  var refreshTimer;
+  document.querySelectorAll('img[loading="lazy"]').forEach(function (img) {
+    if (img.complete) return;
+    img.addEventListener("load", function () {
+      clearTimeout(refreshTimer);
+      refreshTimer = setTimeout(function () {
+        ScrollTrigger.refresh();
+      }, 100);
+    });
+  });
 })();

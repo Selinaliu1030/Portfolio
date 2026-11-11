@@ -360,20 +360,18 @@ module.exports = function (eleventyConfig) {
           const cap = img.caption
             ? `<p class="site-feature-caption">${esc(img.caption)}</p>`
             : "";
-          return `
-            <figure class="site-feature-figure">
-              <div class="site-feature-frame">
-                <img loading="lazy" sizes="100vw" src="${esc(img.src)}" alt="${esc(img.alt || "")}" class="site-feature-img">
-                <span class="site-feature-frame_expand" aria-hidden="true">⤢</span>
-              </div>${cap}
-            </figure>`;
+          // Single line, like the branches below: this output goes back
+          // through markdown-it (imageRow is used inside {% section %}),
+          // and multi-line indented HTML here came out with stray empty
+          // <p> elements between figures, each taking a flex gap in the row.
+          return `<figure class="site-feature-figure"><div class="site-feature-frame"><img loading="lazy" sizes="100vw" src="${esc(img.src)}" alt="${esc(img.alt || "")}" class="site-feature-img"><span class="site-feature-frame_expand" aria-hidden="true">⤢</span></div>${cap}</figure>`;
         }
         if (img.caption) {
           return `<figure><figcaption>${esc(img.caption)}</figcaption><img loading="lazy" sizes="100vw" src="${esc(img.src)}" alt="${esc(img.alt || "")}"></figure>`;
         }
         return `<img loading="lazy" sizes="100vw" src="${esc(img.src)}" alt="${esc(img.alt || "")}">`;
       })
-      .join("\n");
+      .join("");
     return `<div class="w-layout-hflex site-image-row">${items}</div>`;
   });
 

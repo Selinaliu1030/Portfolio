@@ -12,13 +12,93 @@
   var miniWord = laptop.querySelector(".mini-hero");
   var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  var done = false;
+
   function showRealHero() {
+    done = true;
+    removeSkipListeners();
     laptop.classList.add("is-skipped");
     homeHero.classList.add("is-visible");
     workList.classList.add("is-visible");
   }
 
+  // Skippable: the hero and project list sit invisible (opacity 0) but
+  // still in the layout until the zoom finishes, so scrolling during the
+  // ~3.6s sequence used to just scroll through blank cream. Any attempt
+  // to scroll down ends it and jumps straight to the project list;
+  // Escape ends it and stays at the hero. Attached immediately, not on
+  // `load`, since the sequence itself waits for `load` to start.
+  var SCROLL_KEYS = { ArrowDown: 1, PageDown: 1, " ": 1, Spacebar: 1, End: 1 };
+  var touchStartY = null;
+
+  function skipTo(target, e) {
+    if (done) return;
+    if (e && e.cancelable) e.preventDefault();
+    showRealHero();
+    if (target) target.scrollIntoView({ block: "start" });
+    else window.scrollTo(0, 0);
+    if (target) absorbFlick();
+  }
+
+  // A trackpad flick or touch swipe is a burst of events; the first one
+  // skips, and without this the rest would carry on scrolling the page
+  // past the project list's heading. Swallow the remainder of the burst:
+  // until input goes quiet for 150ms, capped at 1s so a deliberate
+  // follow-up scroll still gets through.
+  function absorbFlick() {
+    var startedAt = performance.now();
+    var lastEventAt = startedAt;
+    function swallow(e) {
+      var now = performance.now();
+      if (now - lastEventAt > 150 || now - startedAt > 1000) {
+        window.removeEventListener("wheel", swallow);
+        window.removeEventListener("touchmove", swallow);
+        return;
+      }
+      lastEventAt = now;
+      if (e.cancelable) e.preventDefault();
+    }
+    window.addEventListener("wheel", swallow, { passive: false });
+    window.addEventListener("touchmove", swallow, { passive: false });
+  }
+
+  function onWheel(e) {
+    if (e.deltaY > 0) skipTo(workList, e);
+  }
+  function onKey(e) {
+    if (SCROLL_KEYS[e.key]) skipTo(workList, e);
+    else if (e.key === "Escape") skipTo(null, e);
+  }
+  function onTouchStart(e) {
+    touchStartY = e.touches[0].clientY;
+  }
+  function onTouchMove(e) {
+    if (touchStartY !== null && touchStartY - e.touches[0].clientY > 10) skipTo(workList, e);
+  }
+  // Scrollbar drags and anything else that moves the page without a
+  // wheel/key/touch event.
+  function onScroll() {
+    if (window.scrollY > 40) skipTo(workList);
+  }
+
+  function removeSkipListeners() {
+    window.removeEventListener("wheel", onWheel);
+    window.removeEventListener("keydown", onKey);
+    window.removeEventListener("touchstart", onTouchStart);
+    window.removeEventListener("touchmove", onTouchMove);
+    window.removeEventListener("scroll", onScroll);
+  }
+
+  if (!reduceMotion) {
+    window.addEventListener("wheel", onWheel, { passive: false });
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: false });
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   function play() {
+    if (done) return;
     if (reduceMotion) {
       showRealHero();
       return;

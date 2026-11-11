@@ -1241,31 +1241,38 @@
 }
 
 /* ---------------------------------------------------------------------
-   StreamSync case study restyle. project.njk and the shortcodes in
-   .eleventy.js (metaBox/section/featureBlock/prototypeCallout/
-   conclusionBox) are shared with Taski and TheGiver, so anything here
-   that touches that shared markup must stay scoped to body.is-streamsync
-   (set in base.njk via page.fileSlug) rather than applied sitewide.
+   StreamSync + The Giver case study restyle. project.njk and the
+   shortcodes in .eleventy.js (metaBox/section/featureBlock/
+   prototypeCallout/conclusionBox) are shared with Taski too, so anything
+   here that touches that shared markup must stay scoped to
+   body.is-streamsync / body.is-giver (set in base.njk via page.fileSlug)
+   rather than applied sitewide. The Giver has no established brand color
+   of its own (its app UI is a stock indigo), so it shares StreamSync's
+   coral accent instead of getting a Taski-style override.
    --------------------------------------------------------------------- */
 
-body.is-streamsync {
+body.is-streamsync,
+body.is-giver {
   background-color: var(--home-cream);
   color: var(--home-dark-green);
 }
 
-body.is-streamsync .work-header_info-text {
+body.is-streamsync .work-header_info-text,
+body.is-giver .work-header_info-text {
   color: var(--home-dark-green);
   opacity: 0.6;
 }
 
-body.is-streamsync .work-header_img-wrap {
+body.is-streamsync .work-header_img-wrap,
+body.is-giver .work-header_img-wrap {
   background: linear-gradient(135deg, var(--home-pale-yellow), var(--home-cream));
 }
 
 /* Hero headline only (h1) — section headings (h2) share the same
    .heading-style-h3 class from the "section" shortcode and stay in the
    site's normal sans-serif. */
-body.is-streamsync h1.heading-style-h3 {
+body.is-streamsync h1.heading-style-h3,
+body.is-giver h1.heading-style-h3 {
   font-family: Georgia, "Iowan Old Style", "Times New Roman", serif;
   font-style: normal;
   font-weight: 400;
@@ -1277,40 +1284,49 @@ body.is-streamsync h1.heading-style-h3 {
 .work-header_rule {
   height: 0;
 }
-body.is-streamsync .work-header_rule {
+body.is-streamsync .work-header_rule,
+body.is-giver .work-header_rule {
   width: 68px;
   height: 2px;
   background: var(--home-coral);
   margin-top: 20px;
 }
 
-body.is-streamsync .meta-box {
+body.is-streamsync .meta-box,
+body.is-giver .meta-box {
   padding-top: 26px;
   border-top: 1px solid var(--home-sage);
 }
 body.is-streamsync .meta-facts li,
-body.is-streamsync .meta-overview {
+body.is-streamsync .meta-overview,
+body.is-giver .meta-facts li,
+body.is-giver .meta-overview {
   color: var(--home-dark-green);
 }
-body.is-streamsync .meta-facts_label {
+body.is-streamsync .meta-facts_label,
+body.is-giver .meta-facts_label {
   color: var(--home-dark-green);
   opacity: 0.55;
 }
 
-body.is-streamsync .text-block-3 {
+body.is-streamsync .text-block-3,
+body.is-giver .text-block-3 {
   color: var(--home-dark-green);
   -webkit-text-stroke-color: var(--home-dark-green);
 }
 
-body.is-streamsync .line {
+body.is-streamsync .line,
+body.is-giver .line {
   border-top-color: var(--home-sage);
 }
 
-body.is-streamsync .site-prototype-link {
+body.is-streamsync .site-prototype-link,
+body.is-giver .site-prototype-link {
   background: var(--home-pale-yellow);
   box-shadow: 0 4px 0 var(--home-sage);
 }
-body.is-streamsync .site-prototype-link_arrow {
+body.is-streamsync .site-prototype-link_arrow,
+body.is-giver .site-prototype-link_arrow {
   color: var(--home-coral);
   font-weight: 700;
 }
@@ -1544,7 +1560,261 @@ body.is-taski .site-ref-caption {
 }
 
 body.is-streamsync .site-feature-caption,
-body.is-streamsync .site-ref-caption {
+body.is-streamsync .site-ref-caption,
+body.is-giver .site-feature-caption,
+body.is-giver .site-ref-caption {
   color: var(--home-dark-green);
   opacity: 0.75;
+}
+
+body.is-giver .site-feature-frame_expand {
+  background: var(--home-coral);
+}
+
+/* Survey charts — same mapping as Taski's (dark-green group a, accent
+   group b), with coral standing in for Taski's orange. */
+body.is-giver .insight-bars_group {
+  background: var(--home-pale-yellow);
+  border-color: var(--home-sage);
+}
+body.is-giver .insight-bars_title,
+body.is-giver .insight-bar_value {
+  color: var(--home-dark-green);
+}
+body.is-giver .insight-bar_label {
+  color: var(--home-dark-green);
+  opacity: 0.65;
+}
+body.is-giver .insight-bar_track {
+  background: #fff;
+}
+body.is-giver .insight-bars_group.is-a .insight-bar_fill {
+  background: var(--home-dark-green);
+}
+body.is-giver .insight-bars_group.is-b .insight-bar_fill {
+  background: var(--home-coral);
+}
+
+/* Competitor feature matrix (replaces the flattened 梅竹黑客松-2.png
+   slide). Plain HTML table so the yes/no cells are real text a screen
+   reader can announce, not green/red icons baked into an image. */
+.compare-table {
+  width: 100%;
+  max-width: 720px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+.compare-table th,
+.compare-table td {
+  padding: 14px 12px;
+  text-align: center;
+  border-bottom: 1px solid var(--home-sage);
+  color: var(--home-dark-green);
+}
+.compare-table thead th {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+}
+.compare-table tbody th {
+  text-align: left;
+  font-weight: 700;
+}
+.compare-table tr.is-ours {
+  background: var(--home-pale-yellow);
+}
+.compare-table .is-yes {
+  color: var(--home-dark-green);
+  font-weight: 700;
+}
+.compare-table .is-no {
+  color: var(--home-coral);
+}
+@media (max-width: 600px) {
+  .compare-table th,
+  .compare-table td {
+    padding: 10px 6px;
+    font-size: 0.82rem;
+  }
+}
+
+/* Visually hidden but still announced by screen readers (e.g. the empty
+   corner header cell of .compare-table). */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ---------------------------------------------------------------------
+   About page restyle — same cream/dark-green/coral palette as the case
+   studies. The experience timeline is a plain <ol> with the line drawn
+   by a border, replacing Webflow's flex-block/div-block markup, whose
+   line was a fixed `height: 400%` (overshot the last dot) and whose
+   scroll interaction held every item but one at 20% opacity.
+   --------------------------------------------------------------------- */
+
+body.is-about {
+  background-color: var(--home-cream);
+  color: var(--home-dark-green);
+}
+body.is-about .text-style-label,
+body.is-about h1,
+body.is-about h2 {
+  color: var(--home-dark-green);
+}
+
+/* Bio: left-aligned (justify left wide rivers at this column width),
+   readable size, and a capped line length beside the portrait. */
+body.is-about .text-block-5 {
+  text-align: left;
+  font-size: 1.125rem;
+  line-height: 1.65;
+  max-width: 62ch;
+  margin-right: 0;
+}
+/* The source PNG is a round photo on a baked-in off-white square;
+   clip to the circle so the square doesn't show on the cream page. */
+body.is-about .image-34 {
+  min-width: 0;
+  width: min(280px, 36%);
+  clip-path: circle(39% at 50% 50%);
+}
+@media (max-width: 767px) {
+  body.is-about .flex-block-44 {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  body.is-about .image-34 {
+    width: 200px;
+  }
+}
+
+.about-timeline {
+  list-style: none;
+  margin: 72px 0 96px;
+  padding: 0 0 0 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  max-width: 760px;
+}
+.about-timeline_item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+/* Dot sits on the border-left line, vertically aligned with the date. */
+.about-timeline_item::before {
+  content: "";
+  position: absolute;
+  left: -44px;
+  top: 4px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--home-cream);
+  border: 2px solid var(--home-dark-green);
+}
+/* Line segment from this dot down to the next one (the list's 64px
+   gap), so it stops at the last dot instead of running past it. */
+.about-timeline_item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  left: -37px;
+  top: 22px;
+  bottom: -68px;
+  width: 2px;
+  background: var(--home-sage);
+}
+.about-timeline_item:first-child::before {
+  background: var(--home-coral);
+  border-color: var(--home-coral);
+}
+/* Scroll focus (src/js/interactive.js adds .is-focus to the list, and
+   .is-active to the entry crossing the middle of the viewport). Without
+   JS or with reduced motion, .is-focus never lands, so nothing dims. */
+.about-timeline.is-focus .about-timeline_item > * {
+  opacity: 0.2;
+  transition: opacity 0.35s ease;
+}
+.about-timeline.is-focus .about-timeline_item.is-active > * {
+  opacity: 1;
+}
+.about-timeline.is-focus .about-timeline_item::before {
+  transition: background-color 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+}
+.about-timeline.is-focus .about-timeline_item:first-child:not(.is-active)::before {
+  background: var(--home-cream);
+  border-color: var(--home-dark-green);
+}
+.about-timeline.is-focus .about-timeline_item.is-active::before {
+  background: var(--home-coral);
+  border-color: var(--home-coral);
+  transform: scale(1.15);
+}
+
+.about-timeline_item .heading-style-h4 {
+  margin: 0;
+}
+.about-timeline_item .aboutme-description {
+  margin: 4px 0 0;
+  color: var(--home-dark-green);
+  opacity: 0.85;
+  line-height: 1.6;
+}
+.about-timeline_tools {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.about-timeline_tools li {
+  font-family: var(--_typography---font-family--detail);
+  font-size: 0.8rem;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--home-pale-yellow);
+  border: 1px solid var(--home-sage);
+  color: var(--home-dark-green);
+}
+
+/* Interest cards */
+body.is-about .line {
+  border-top-color: var(--home-sage);
+}
+body.is-about .label_line {
+  background-image: none;
+  background-color: var(--home-coral);
+}
+body.is-about .approach_item-content h2,
+body.is-about .approach_item-content p {
+  color: var(--home-dark-green);
+}
+body.is-about .approach_item-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
+/* Webflow's .navbar gets an off-white (#f8f7f3) background at the mobile
+   breakpoint, which shows as a pale strip above the cream page on every
+   restyled page. */
+body.is-streamsync .navbar,
+body.is-taski .navbar,
+body.is-giver .navbar,
+body.is-about .navbar {
+  background-color: var(--home-cream);
 }

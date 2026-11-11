@@ -14,7 +14,7 @@ thumbnailSrcset: "images/f54d5a6b3d8e9890c0784bf56e5b9a9e-p-500.jpg 500w, images
 skills: "JavaScript, HTML, CSS, React Native, PHP, User Research, Questionnaire, Accessibility"
 person: "Group Project (Hackathon)"
 role: "Front-end, Questionnaire, Presenter"
-overview: "The Giver is a caregiving app designed to support both dementia patients and their caregivers. By synchronizing patient status and providing real-time notifications, the system helps reduce caregiver workload and alleviates challenges caused by workforce shortages. The app also includes a voice-based Q&A feature that responds to repeated patient questions using stored answers, significantly lowering the emotional stress placed on caregivers who frequently need to repeat the same information."
+overview: "The Giver is a caregiving app for dementia patients and their caregivers. It syncs each patient's status to the caregiver in real time, cutting the workload that caregiver shortages pile onto each person. A voice Q&A feature answers patients' repeated questions with stored answers, so caregivers don't have to give the same reply again and again."
 prototype:
   url: "https://drive.google.com/file/d/1RILlVlOxNPeoS6OpDsNDJGW-MgmUitYD/view?usp=sharing"
   icon: link
@@ -23,59 +23,55 @@ features:
     title: "Record & Monitor Daily Routine"
     image: images/Adobe-Express---daily_routine.gif
     imageAlt: "Patient daily routine tracking screen"
+    caption: "A patient marks a routine as done, and it shows up on the caregiver's dashboard right away."
     parts:
       - label: "Patient Side"
-        body: "Patients can easily record whether they have completed their daily routines directly on the screen. The interface uses only four large, intuitive icons, minimizing confusion and making it easy for users with memory loss to operate. Once a task is marked as \"done,\" the patient can immediately see the confirmation, helping prevent repeated actions or repeated questioning."
+        body: "Patients record whether they've completed each daily routine directly on screen. The interface uses only four large, intuitive icons, so it stays easy to operate with memory loss. Once a task is marked \"done,\" the confirmation stays visible, which prevents repeated actions and repeated questions."
       - label: "Caregiver Side"
-        body: "When a patient marks a task as completed, the update is instantly reflected on the caregiver's dashboard. Caregivers can view all assigned patients in one centralized page, allowing them to monitor routines without checking individually or repeatedly asking each person. This real-time overview significantly reduces workload, improves efficiency, and supports the management of multiple dementia patients at once."
+        body: "Each completed task is instantly reflected on the caregiver's dashboard, which shows every assigned patient on one page. Caregivers can monitor routines without checking in on or asking each person individually, making it practical to look after several dementia patients at once."
   - tag: "Core features 2"
     title: "Question Asking & Answering"
     image: images/Adobe-Express---螢幕錄影-2023-10-22-下午2.15.56.gif
     imageAlt: "Voice question and answer feature screen"
+    caption: "Repeated questions get a recorded answer automatically. New ones are routed to the caregiver."
     parts:
       - label: "Patient Side"
-        body: "Patients can use the built-in microphone to ask questions whenever they feel uncertain or need reassurance. If the question has been asked before, the system retrieves the most similar previously answered question and plays the recorded response aloud. This helps reduce repetitive questioning, common in dementia care, and provides immediate comfort without requiring caregiver intervention. If the system cannot find a matching answer, it flags the question as new and informs the caregiver."
+        body: "Patients tap the microphone to ask a question whenever they feel uncertain or need reassurance. If it has been asked before, the system finds the most similar answered question and plays the recorded response aloud, giving immediate comfort without a caregiver stepping in. If there's no match, the question is flagged as new and sent to the caregiver."
       - label: "Caregiver Side"
-        body: "For unanswered questions, the caregiver receives a notification and can record a response directly within the interface. The system then automatically stores the audio reply in the database for future matching. Over time, this builds a personalized knowledge base tailored to each patient's recurring needs and patterns, significantly reducing caregiver workload while ensuring patients receive timely, consistent answers."
+        body: "For unanswered questions, the caregiver gets a notification and records a reply right in the app. The audio is stored for future matching, so over time each patient builds up a personalized answer library shaped around their own recurring questions."
   - tag: "core features 3"
     title: "Alert System"
     image: images/Adobe-Express---alert-2.gif
     imageAlt: "Emergency alert button screen"
+    caption: "One red button sends the caregiver an instant alert naming the patient who needs help."
     parts:
       - label: "Patient Side"
-        body: "A prominently placed red alert button is located at the top-right corner of the patient's interface. Whenever the patient needs immediate assistance, they can simply press the button. The system then sends an instant notification to the caregiver, ensuring quick communication even when the patient is unable to express their needs verbally."
+        body: "A prominent red alert button sits in the top-right corner of the patient's screen. Pressing it instantly notifies the caregiver, so patients can get help even when they can't explain what they need."
       - label: "Caregiver Side"
-        body: "When any patient triggers the alert button, the caregiver receives a real-time notification indicating which patient requires help. This allows caregivers to respond promptly and manage urgent situations more efficiently, especially when overseeing multiple patients at once."
+        body: "The caregiver receives a real-time notification showing which patient needs help, so they can respond quickly even while overseeing several patients at once."
 conclusion:
   learned: "Through this project, I gained hands-on experience designing for accessibility and learned how to translate real caregiver and dementia patient needs into clear, usable interfaces. I also strengthened my skills in rapid prototyping, user research, and integrating frontend React Native components with backend services. Additionally, I deepened my understanding of how voice processing, similarity matching, and cloud-based APIs can support real-world caregiving workflows."
-  future: "In the future, we hope to add more features like scanning medicine labels and auto-adding to a calendar. And extend the system to more than just dementia patients but daily life relations like parent caring."
+  future: "In the future, we hope to add features like scanning medicine labels and adding them to a calendar automatically, and to extend the system beyond dementia care to everyday caregiving relationships, such as looking after aging parents."
 ---
 {% metaBox skills, person, role, overview %}
 
 {% section "background", "Background" %}
 **Hackathon Prompt**
-Google challenged participants to design solutions using the Android Accessibility API to enhance mobile experiences for users who rely on assistive technologies. The prompt emphasized inclusive design, encouraging teams to create practical, meaningful tools that expand accessibility on Android.
+Google challenged participants to use the Android Accessibility API to improve mobile experiences for people who rely on assistive technologies, with an emphasis on practical, inclusive tools.
 
 **Problem Insight**
-From this prompt, our team identified a critical issue in Taiwan's healthcare landscape: the shortage of caregivers supporting dementia patients. With dementia diagnoses rising, caregivers face long working hours, high emotional stress, and increasing responsibility. Taiwan currently faces a workforce gap of over 8,000 caregivers, and 85% report elevated anxiety and pressure.
+We tied the prompt to a pressing problem in Taiwan: a shortage of dementia caregivers. Diagnoses are rising while the workforce gap has passed 8,000 caregivers, and 85% of caregivers report elevated anxiety and pressure from long hours and heavy responsibility.
 
 **Design Opportunity**
-These challenges reveal an opportunity to build an accessible digital tool that helps caregivers monitor and support multiple dementia patients more efficiently. By leveraging the Android Accessibility API, the project aims to reduce caregiver burden while improving the quality of care for individuals with disabilities.
-
-![Accessibility-focused illustration](images/flat-vector-illustration-with-dark-minimalist-line-5.png)
+An accessible tool that lets one caregiver monitor and support several patients efficiently could ease that burden without lowering the quality of care.
 {% endsection %}
 
 {% section "background", "Target Audience" %}
 **Caregivers**
-Caregivers in dementia care face overwhelming challenges. Due to severe workforce shortages, one caregiver is often responsible for multiple patients, resulting in heavy physical and mental workload. The nature of dementia care is emotionally demanding, patients may ask repetitive questions, experience mood instability, and require constant reassurance. Over time, these interactions can lead to caregiver fatigue, stress, and a sense of frustration or helplessness.
+Workforce shortages often leave one caregiver responsible for several patients. Repetitive questions, mood swings, and the constant need for reassurance make the work emotionally draining, and over time lead to fatigue, stress, and a sense of helplessness.
 
 **Patients with Dementia**
-Patients often struggle with memory loss, frequently forgetting daily routines such as whether they have eaten, taken medication, or performed essential tasks. They may also forget questions they have already asked, leading them to repeat the same inquiries. These symptoms not only increase the complexity of caregiving but also highlight the need for supportive tools that help patients regain a sense of autonomy and reduce unnecessary caregiver load.
-
-{% imageRow [
-  { src: "images/flat-vector-illustration-with-dark-minimalist-line.png", alt: "Caregiver illustration" },
-  { src: "images/flat-vector-illustration-with-dark-minimalist-line-3.png", alt: "Patient illustration" }
-] %}
+Patients often forget whether they've eaten, taken medication, or finished other daily tasks, and forget questions they've already asked, so they ask again. Tools that help them keep track on their own restore some autonomy and take load off caregivers at the same time.
 {% endsection %}
 
 {% prototypeCallout prototype %}
@@ -83,42 +79,62 @@ Patients often struggle with memory loss, frequently forgetting daily routines s
 {% for f in features %}{% featureBlock f %}{% endfor %}
 
 {% section "competitors", "Current Market" %}
-Most caregiving apps offer basic tracking features, but they lack real-time doctor–patient or caregiver–patient connection, making it difficult to respond quickly to patient needs. Existing products also do not support voice-based Q&A, so caregivers must repeatedly answer the same questions. Additionally, many interfaces are not designed with dementia-friendly simplicity in mind. **The Giver** addresses these gaps by providing instant updates, a smart voice Q&A system, and a clearly labeled, accessible interface, making it a more complete and supportive solution for dementia care.
+Most caregiving apps offer basic tracking but no real-time link between patients and their doctors or caregivers, no voice Q&A, and interfaces that aren't designed for dementia-friendly simplicity. **The Giver** covers all three.
 
-![Hackathon presentation](images/梅竹黑客松-2.png)
+<table class="compare-table">
+  <thead>
+    <tr><th scope="col"><span class="sr-only">App</span></th><th scope="col">Doctor–patient connection</th><th scope="col">Voice Q&amp;A</th><th scope="col">Clearly labeled functions</th></tr>
+  </thead>
+  <tbody>
+    <tr class="is-ours"><th scope="row">The Giver</th><td class="is-yes">✓ Yes</td><td class="is-yes">✓ Yes</td><td class="is-yes">✓ Yes</td></tr>
+    <tr><th scope="row">CareZone</th><td class="is-no">✕ No</td><td class="is-no">✕ No</td><td class="is-yes">✓ Yes</td></tr>
+    <tr><th scope="row">Dementia Caregiver Solution</th><td class="is-no">✕ No</td><td class="is-no">✕ No</td><td class="is-no">✕ No</td></tr>
+  </tbody>
+</table>
 {% endsection %}
 
 {% section "User needs", "Questionnaire" %}
-We distributed a questionnaire to individuals with elderly family members or relatives with dementia and collected approximately 90 responses. The survey aimed to understand the daily challenges faced by dementia patients and caregivers, as well as their expectations for potential digital support tools. The insights gathered helped us validate user needs and shape the core functions of *The Giver*.
+We surveyed 78 people, about a third of whom have a family member, relative, or friend with dementia, to understand the day-to-day challenges of dementia care and what people would want from a digital tool.
 
 **Insight:**
-From the questionnaire results, we learned that the two most valued features for our target users are **reminders for daily tasks** and **easy communication** with family members or caregivers. Respondents also emphasized that any solution must have a **simple, easy-to-use interface**, as dementia patients often struggle with complex navigation or excessive information. These insights directly guided the core functions and UI design of *The Giver*.
+Respondents valued **easy contact with family** and **daily task reminders** most, and asked for an interface with **big buttons and simple wording**. These findings directly shaped the core features and UI of *The Giver*.
 
-![Questionnaire results presentation](images/Pink-Bold-Rounded-Grid-Project-Brief-Presentation-2.png)
+{% insightBars [
+  { title: "Most important features", items: [
+    { label: "Family's contact info", value: 78 },
+    { label: "Daily task reminder", value: 63 },
+    { label: "Medicine reminder", value: 60 }
+  ] },
+  { title: "How the UI should be designed", items: [
+    { label: "Big buttons & simple icons", value: 77 },
+    { label: "Clear & simple wording", value: 73 },
+    { label: "High-contrast colors", value: 21 }
+  ] }
+] %}
 {% endsection %}
 
 {% section "Prototype", "Wireframe" %}
 {% imageRow [
-  { src: "images/homepage.jpg", alt: "Patient home page wireframe", caption: "Patient Home Page" },
-  { src: "images/caregiver_wireframe.jpg", alt: "Caregiver home page wireframe", caption: "Caregiver Home Page" },
-  { src: "images/recording.jpg", alt: "Unanswered list wireframe", caption: "Unanswered List for Caregiver" },
-  { src: "images/recording-2.jpg", alt: "Recording page wireframe", caption: "Recording Page for Caregiver" }
+  { src: "images/homepage.jpg", alt: "Patient home page wireframe", caption: "Patient Home Page", zoomable: true },
+  { src: "images/caregiver_wireframe.jpg", alt: "Caregiver home page wireframe", caption: "Caregiver Home Page", zoomable: true },
+  { src: "images/recording.jpg", alt: "Unanswered list wireframe", caption: "Unanswered List for Caregiver", zoomable: true },
+  { src: "images/recording-2.jpg", alt: "Recording page wireframe", caption: "Recording Page for Caregiver", zoomable: true }
 ] %}
 {% endsection %}
 
 {% section "Prototype", "Feedback" %}
-After creating the prototype, we distributed a follow-up questionnaire to our target user group to gather feedback on usability and perceived value. Over **75%** of respondents indicated they would be willing to use the app, and many also expressed that they would be willing to pay for such a solution, confirming strong user demand and validating our design direction.
+After building the prototype, we asked respondents whether they would buy or recommend the app. Only a small minority said no. Most (**76.9%**) said it would depend on the price, and **83%** picked a paid price range, most often €3–10. That points to real demand, as long as the price stays low.
 
 {% imageRow [
-  { src: "images/feedback.png", alt: "User feedback survey results chart 1" },
-  { src: "images/feedback2.png", alt: "User feedback survey results chart 2" }
+  { src: "images/feedback.png", alt: "Pie chart: would you consider buying or recommending this app? 76.9% maybe, depends on the price; 12.8% yes, but only for free", zoomable: true },
+  { src: "images/feedback2.png", alt: "Pie chart: price range for this app. 37.2% €3–10, 30.8% €3 or less, 16.7% free, 11.5% €10–15", zoomable: true }
 ] %}
 {% endsection %}
 
 {% section "Prototype", "Technical Implementation" %}
-The system uses the **Google Cloud Speech-to-Text API** to convert patient voice queries into text, which the backend compares against entries stored in an **SQL database** using a similarity-matching algorithm. The backend, connected to a **React Native** frontend for both patient and caregiver interfaces, sends notifications when no matching answer exists, allowing caregivers to record a new response. Each new audio and text pair is then stored in the SQL database, gradually building a personalized Q&A library that reduces repetitive workload.
+**Google Cloud Speech-to-Text** converts a patient's spoken question into text, which the backend matches against stored questions in an **SQL database** using a similarity algorithm. When there's no match, the **React Native** caregiver app is notified so the caregiver can record an answer. Each new audio and text pair is saved back to the database, gradually building a personalized Q&A library.
 
-![Technical implementation diagram](images/Screenshot-2025-12-06-at-12.19.05-AM.png)
+<div class="site-ref-img is-wide"><img loading="lazy" src="images/Screenshot-2025-12-06-at-12.19.05-AM.png" alt="Flow: patient asks by voice, speech-to-text and similarity search find a stored answer, or the caregiver is notified to record one, which is stored to the database"></div>
 {% endsection %}
 
 {% conclusionBox conclusion.learned, conclusion.future %}
